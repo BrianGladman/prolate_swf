@@ -1,12 +1,4 @@
-module param
-    integer, parameter :: knd = selected_real_kind(8)
-    logical, parameter :: debug = .true.
-    logical, parameter :: warn = .true.
-    logical, parameter :: output = .true.
-    logical, parameter :: suffix = .false.
-    end module param
-
-program profcn
+       program profcn
 !      version 1.10 March 2021
 !
     use param
@@ -1381,7 +1373,7 @@ if (output) then
                   if(nacce.ne.1) chr = 'w'
                   if(nacce.eq.1) chr = 'e'
               end if
-              if(ioprad.eq.2.and.nacce.ne.1) write(20,690)l,r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr,chr
+              if(ioprad.eq.2) write(20,690)l,r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr,chr
               if(ioprad.eq.1) write(20,710) l,r1c,ir1e,r1dc,ir1de
 690           format(1x,i6,2x,4(f17.14,1x,i6,2x),i2,a) 
 710           format(1x,i6,2x,2(f17.14,1x,i6,2x))
@@ -3821,13 +3813,14 @@ end if
 !
 !  error printout
 210 continue
-if (debug) then
+if (output) then
         write(20,220) l,c,m
 end if
 if (warn) then
         write(60,220) l,c,m
 end if
-220     format(1x,'error in eigenvalue at l= ',i5,2x,'c = ',e25.15, 2x,'m= ',i5)
+220     format(1x,'error in eigenvalue at l= ',i5,2x,'c = ',e25.15, &
+               2x,'m= ',i5)
         return
         end subroutine
 !

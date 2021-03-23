@@ -1,3 +1,5 @@
+! version 1.10 March 2021
+
 module prolate_swf
   use param
 
@@ -8,133 +10,6 @@ module prolate_swf
                       ir2e, r2dc, ir2de, naccr, &
                       s1c, is1e, s1dc, is1de, naccs)
 
-!      version 1.10 March 2021
-!
-!  Subroutine version of the fortran program profcn originally developed
-!  about 2000 by arnie lee van buren and jeffrey boisvert. Updated
-!  several times since then. For more information see the GitHub
-!  repository: GitHub.com/MathieuandSpheroidalWaveFunctions/Prolate_swf.
-!  Especially see the readme file, example input and output files and two
-!  journal articles describing the methods used in profcn.
-!
-!  purpose:     To calculate the first and second kind prolate
-!               radial functions r1 and r2 and their first
-!               derivatives r1d and r2d for a given order m,
-!               a range of degrees l beginning at m, and for a
-!               specific size parameter c and shape parameter x.
-!               [Note that profcn inputs x1 = x - 1]
-!               To calculate the first kind prolate angular
-!               functions and their first derivatives with
-!               respect to eta for a range of values for l
-!               and eta for specified values of c and m.
-!
-!  Profcn can be run in either double precision or quadruple precision
-!  arithmetic. The choice is set in the module param provided in the github
-!  repository. If this is not available, then create param as follows:
-!    module param
-!    integer, parameter :: knd = selected_real_kind(8)
-!    logical, parameter :: debug = .true.
-!    logical, parameter :: warn = .true.
-!    logical, parameter :: output = .true.
-!    end module param
-!  Set the value of knd in the parenthesis to either 8 for double
-!  precision or 16 for quadruple precision arithmetic. Some compilers
-!  require that param be compiled prior to rather than after the module
-!  prolate_swf. The logicals in param are described in the readme file
-!  and below in the discussion of the output files.
-!
-!  Profcn provides accurate results over very wide parameter ranges when
-!  using double precision. It provides higher accuracy using quadruple
-!  precision but run times are considerable greater.
-!
-!    Input and output parameters
-!
-!          c      : desired value of the size parameter (= kd/2, where
-!                   k = wavenumber and d = interfocal length) (either
-!                   real*8 or real*16)
-!          m      : desired value for the order m (integer)
-!          lnum   : number of values desired for the degree l equal
-!                   to m, m + 1, m + 2, ..., m + lnum - 1 (integer)
-!          ioprad : (integer)
-!                 : =0 if radial functions are not computed
-!                 : =1 if radial functions of only the first kind
-!                      and their first derivatives are computed
-!                 : =2 if radial functions of both kinds and
-!                      their first derivatives are computed
-!          x1     : value of the radial coordinate x minus 1.0. This
-!                   choice is made to avoid subtraction errors in
-!                   calculating quantities containing x - 1 when x
-!                   is close to unity. (a nominal value can be entered
-!                   for x1 if ioprad = 0)
-!          iopang : (integer)
-!                 : =0 if angular functions are not computed
-!                 : =1 if angular functions of the first kind
-!                      are computed
-!                 : =2 if angular functions of the first kind and
-!                      their first derivatives are computed
-!          iopnorm: (integer)
-!                 : =0 if not scaled. The angular functions have
-!                      the same norm as the corresponding associated
-!                      legendre function [i.e., we use the Meixner and
-!                      Schafke normalization scheme.] This norm
-!                      becomes very large as m becomes large. The
-!                      angular functions are computed below as
-!                      a characteristic and an exponent to avoid
-!                      overflow.
-!                 : =1 if angular functions of the first kind
-!                      (and their first derivatives if computed)
-!                      are scaled by the square root of the
-!                      normalization of the corresponding
-!                      associated Legendre function. The resulting
-!                      scaled angular functions have unity norm.
-!                      This is very useful since it removes the
-!                      need to calculate a normalization factor
-!                      when using the angular function values given
-!                      here. It also eliminates any chance for
-!                      overflow when the characteristics and exponents
-!                      are combined to form the angular functions.
-!          narg   : number of values of the angular coordinate eta for
-!                   which angular functions are calculated (integer)
-!          arg:     vector containing the values of eta for which
-!                   angular functions are desired (real*8 or real*16)
-!          r1c   :  either real*8 or real*16 vectors of length lnum
-!          r1dc     containing the characteristics for the radial
-!                   radial functions of the first kind r1 and their
-!                   first derivatives
-!          ir1e   : integer vectors of length lnum containing the
-!          ir1de    exponents corresponding to r1c and r1dc
-!          r2c    : real*8 or real*16 vectors of length lnum containing
-!          r2dc     the characteristics for the radial functions of the
-!                   second kind r2 and their first derivatives
-!          ir2e   : integer vectors of length lnum containing the
-!          ir2de    exponents corresponding to r2c and r2dc
-!          naccr  : integer vector of length lnum containing the estimated
-!                   accuracy of the radial functions
-!          s1c,   : two-dimensional arrays s1c(lnum,narg) and
-!          s1dc     s1dc(lnum,narg) that contain narg calculated
-!                   characteristics for the angular functions and
-!                   their first derivatives for each of the lnum
-!                   values of l (real*8 or real*16)
-!                   For example, s1(10,1) is the characteristic
-!                   of the angular function for l = m +10 -1 and
-!                   for the first value of eta given by arg(1)
-!          is1e,  : integer arrays is1e(lnum,narg) and is1de(lnum,narg)
-!          is1de    containing the exponents corresponding to s1c and
-!                   s1dc
-!          naccs  : two-dimensional array naccs(lnum,narg) containing
-!                   narg estimated accuracy values for the angular functions
-!                   for each of the lnum values of l
-!
-!  Profcn offers several several output files: Fort.20 and fort.30
-!  list the calculated radial and angular functions. Fort.40 and
-!  fort.50 are diagnostic files. Fort.60 provides warning whenever the
-!  estimated accuracy falls below a specified minimum, currently set
-!  equal to 6. Writing to these files is controlled by logicals specified
-!  above in the module param. False suppresses the file; true enables it.
-!  Debug controls fort.30 and fort.40, warn controls fort.60 and output
-!  controls fort.20 and fort.30. Information about these files as well
-!  as a discussion about accuracy, expansion d coefficients and eigenvalues
-!  is given in the readme file.
 
         real(knd), intent (in)  ::  c, x1, arg(narg)
         integer, intent (in)    ::  m, lnum, ioprad, iopang, iopnorm, narg
@@ -1432,8 +1307,8 @@ end if
 680           continue
 if (output) then
               if(nacce.ne.1) chr = 'w'
-              if(nacce.eq.1) chr = 'e'              
-              if(ioprad.eq.2.and.nacce.ne.1) write(20,690)l,r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr,chr
+              if(nacce.eq.1) chr = 'e'
+              if(ioprad.eq.2) write(20,690)l,r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr,chr
               if(ioprad.eq.1) write(20,710) l,r1c,ir1e,r1dc,ir1de
 690           format(1x,i6,2x,4(f17.14,1x,i6,2x),i2,a) 
 710           format(1x,i6,2x,2(f17.14,1x,i6,2x))
@@ -1496,8 +1371,8 @@ if (debug) then
 745             format(1x,'eta = ',e38.31,'  accuracy = ',i5, ' digits.')
 end if
 if (output) then
-                if(ioparg.eq.1.and.iopang.eq.1) write(30,750) barg(jarg),s1c(jarg),is1e(jarg),naccs(jarg)
-                if(ioparg.eq.1.and.iopang.eq.2) write(30,760) barg(jarg),s1c(jarg),is1e(jarg),s1dc(jarg),is1de(jarg),naccs(jarg)
+                if(iopang.eq.1) write(30,750) barg(jarg),s1c(jarg),is1e(jarg),naccs(jarg)
+                if(iopang.eq.2) write(30,760) barg(jarg),s1c(jarg),is1e(jarg),s1dc(jarg),is1de(jarg),naccs(jarg)
 750             format(1x,f19.14,2x,f17.14,2x,i5,2x,', ',i2)
 760             format(1x,f19.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
 end if
@@ -3883,13 +3758,14 @@ end if
 !
 !  error printout
 210 continue
-if (debug) then
+if (output) then
         write(20,220) l,c,m
 end if
 if (warn) then
         write(60,220) l,c,m
 end if
-220     format(1x,'error in eigenvalue at l= ',i5,2x,'c = ',e25.15, 2x,'m= ',i5)
+220     format(1x,'error in eigenvalue at l= ',i5,2x,'c = ',e25.15, &
+               2x,'m= ',i5)
         return
         end subroutine
 !
