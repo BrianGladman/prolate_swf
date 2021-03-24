@@ -1,5 +1,14 @@
-       program profcn
-!      version 1.10 March 2021
+! version 1.10 March 2021
+
+module param
+    integer, parameter :: knd = selected_real_kind(8)
+    logical, parameter :: debug = .true.
+    logical, parameter :: warn = .true.
+    logical, parameter :: output = .true.
+    logical, parameter :: suffix = .false.    
+end module param
+
+program profcn
 !
     use param
 !
