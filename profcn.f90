@@ -434,12 +434,6 @@ end if
             end do
 20        continue
           igau=0
-if (debug) then
-          if(knd.eq.kindd.and.ioprad.ne.0) write(40,25) x,c
-25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
-          if(knd.eq.kindq.and.ioprad.ne.0) write(40,25) x,c
-30        format(1x,'x = ',e39.31,/,1x,'c = ',e39.31)
-end if
           nc=int(log10(c))
           if(nc.lt.0) nc=0
           if(ioprad.eq.2) wront=1.0e0_knd/(c*x1*(x1+2.0e0_knd))
@@ -448,12 +442,16 @@ end if
             m=mmin+minc*(mi-1)
             m2=m+m
 if (debug) then
-             if(knd.eq.kindd.and.iopang.ne.0) write(50,35) c,m
- 35          format(1x,'c = ',e23.14,'; m = ',i5)
-             if(knd.eq.kindq.and.iopang.ne.0) write(50,40) c,m
- 40          format(1x,'c = ',e40.30,'; m = ',i5)
-             if(ioprad.ne.0) write(40,50) m
-50           format(1x,'m = ',i5)
+          if(knd.eq.kindd.and.ioprad.ne.0) write(40,25) x,c
+25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
+          if(knd.eq.kindq.and.ioprad.ne.0) write(40,25) x,c
+30        format(1x,'x = ',e39.31,/,1x,'c = ',e39.31)
+          if(knd.eq.kindd.and.iopang.ne.0) write(50,35) c,m
+35        format(1x,'c = ',e23.14,'; m = ',i5)
+          if(knd.eq.kindq.and.iopang.ne.0) write(50,40) c,m
+40        format(1x,'c = ',e40.30,'; m = ',i5)
+          if(ioprad.ne.0) write(40,50) m
+50        format(1x,'m = ',i5)
 end if
 if (output) then
              if(knd.eq.kindd.and.iopang.ne.0) write(30,60) c,m
