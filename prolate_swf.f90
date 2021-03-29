@@ -6,8 +6,7 @@ module prolate_swf
   contains
 
     subroutine profcn(c, m, lnum, ioprad, x1, iopang, iopnorm, narg, arg, &
-                      r1c, ir1e, r1dc, ir1de, r2c, &
-                      ir2e, r2dc, ir2de, naccr, &
+                      r1c, ir1e, r1dc, ir1de, r2c, ir2e, r2dc, ir2de, naccr, &
                       s1c, is1e, s1dc, is1de, naccs)
 
 
@@ -100,17 +99,18 @@ module prolate_swf
          call main (mmin,minc,mnum,lnum,c,ioprad,iopang,iopnorm,minacc, &
                     x1,ngau,arg,narg,neta,maxd,maxdr,maxint,maxj,maxlp, &
                     maxm,maxmp,maxn,maxp,maxpdr,maxq,maxt,jnenmax, &
-                    kindd,kindq,ndec,nex,r1c,ir1e,r1dc,ir1de,r2c,ir2e, &
-                    r2dc,ir2de,naccr,s1c,is1e,s1dc,is1de,naccs)
+                    kindd,kindq,ndec,nex, &
+                    r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr, &
+                    s1c,is1e,s1dc,is1de,naccs)
 
         end subroutine
 
-        subroutine main (mmin,minc,mnum,lnum,c,ioprad,iopang,iopnorm, &
-                         minacc,x1,ngau,barg,narg,neta,maxd,maxdr, &
-                         maxint,maxj,maxlp,maxm,maxmp,maxn,maxp,maxpdr, &
-                         maxq,maxt,jnenmax,kindd,kindq,ndec,nex,qr1,ir1, &
-                         qr1d,ir1d,qr2,ir2,qr2d,ir2d,nar,s1,is1,s1d,is1d, &
-                         nas)
+        subroutine main (mmin,minc,mnum,lnum,c,ioprad,iopang,iopnorm,minacc, &
+                         x1,ngau,barg,narg,neta,maxd,maxdr, maxint,maxj,maxlp, &
+                         maxm,maxmp,maxn,maxp,maxpdr,maxq,maxt,jnenmax, &
+                         kindd,kindq,ndec,nex, &
+                         qr1,ir1,qr1d,ir1d,qr2,ir2,qr2d,ir2d,nar, &
+                         s1,is1,s1d,is1d,nas)
 
 !  purpose:     To coordinate the calculation of both the prolate
 !               spheroidal radial and angular functions and their
