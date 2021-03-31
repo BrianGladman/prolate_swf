@@ -20,6 +20,9 @@ program prodrv
 
 !   open input and output files
     open(1, file='profcn.dat')
+    open(20 ,file='fort.20')
+    open(30, file='fort.30')
+    
 !
 !   read input data
     read(1,*) mmin, minc, mnum, lnum
@@ -100,6 +103,8 @@ program prodrv
     deallocate (ir1e, ir1de, ir2e, ir2de, naccr)
     deallocate (arg, r1c, r1dc, r2c, r2dc)
     close(1)
+    close(30)
+    close(20)
 
 end program prodrv
                          
