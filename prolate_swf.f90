@@ -357,9 +357,9 @@ module prolate_swf
 !  begin loops
           igau = 0
 if (debug) then
-          if(knd == kindd .and. ioprad /= 0) write(40, 25) x, c
+          if(knd == kindd  .and.  ioprad /= 0) write(40, 25) x, c
 25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
-          if(knd == kindq .and. ioprad /= 0) write(40, 25) x, c
+          if(knd == kindq  .and.  ioprad /= 0) write(40, 25) x, c
 30        format(1x,'x = ',e39.31,/,1x,'c = ',e39.31)
 end if
           nc = int(log10(c))
@@ -370,17 +370,17 @@ end if
             m = mmin + minc * (mi - 1)
             m2 = m + m
 if (debug) then
-             if(knd == kindd .and. iopang /= 0) write(50, 35) c, m
+             if(knd == kindd  .and.  iopang /= 0) write(50, 35) c, m
  35          format(1x,'c = ',e23.14,'; m = ',i5)
-             if(knd == kindq .and. iopang /= 0) write(50, 40) c, m
+             if(knd == kindq  .and.  iopang /= 0) write(50, 40) c, m
  40          format(1x,'c = ',e40.30,'; m = ',i5)
              if(ioprad /= 0) write(40, 50) m
 50           format(1x,'m = ',i5)
 end if
 if (output) then
-             if(knd == kindd .and. iopang /= 0) write(30, 60) c, m
+             if(knd == kindd  .and.  iopang /= 0) write(30, 60) c, m
  60          format(1x, e23.14, i5)
-             if(knd == kindq .and. iopang /= 0) write(30, 70) c, m
+             if(knd == kindq  .and.  iopang /= 0) write(30, 70) c, m
  70          format(1x, e40.30, i5)
 end if
             rm = m
@@ -394,13 +394,13 @@ end if
             limcsav = 0
             jjjflag = 0
             if(ioprad /= 2) go to 80
-            if(x1 <= 0.4e0_knd .and. c <= 10.0e0_knd) iopleg = 1
-            if(x1 > 0.4e0_knd .and. c <= 10.0e0_knd) iopneu = 1
-            if(x1 <= 0.4e0_knd .and. c <= 15.0e0_knd .and. minacc <= 16) &
+            if(x1 <= 0.4e0_knd  .and.  c <= 10.0e0_knd) iopleg = 1
+            if(x1 > 0.4e0_knd  .and.  c <= 10.0e0_knd) iopneu = 1
+            if(x1 <= 0.4e0_knd  .and.  c <= 15.0e0_knd  .and.  minacc <= 16) &
                  iopleg = 1
-            if(x1 > 0.4e0_knd .and. c <= 20.0e0_knd .and. minacc <= 16) &
+            if(x1 > 0.4e0_knd  .and.  c <= 20.0e0_knd  .and.  minacc <= 16) &
                  iopneu = 1
-            if(iopleg == 1 .or. iopneu == 1) iopint = 0
+            if(iopleg == 1  .or.  iopneu == 1) iopint = 0
             ioppsum = 1
             iopqnsum = 1
               if(knd == kindd) then
@@ -421,7 +421,7 @@ end if
             nee = neest
             jnen = 0
             incnee = 64
-            if(knd == kindd .and. x1 < 0.2e0_knd) incnee = 32
+            if(knd == kindd  .and.  x1 < 0.2e0_knd) incnee = 32
             msearch = 0
 80          continue
             if(iopang == 0) go to 90
@@ -434,7 +434,7 @@ end if
                       beta, gamma, coefa, coefb, coefc, coefd, coefe)
             limcsav = limps1
             iopd = 3
-90          if(ioprad == 0 .or. mi /= 1) go to 100
+90          if(ioprad == 0  .or.  mi /= 1) go to 100
             limj = lnum + 3 * ndec + int(c) + maxm
             xb = sqrt(x1 * (x1 + 2.0e0_knd))
             call sphbes(c, xb, limj, maxj, maxlp, sbesf, sbesdf, sbesn, ibese, &
@@ -474,9 +474,9 @@ end if
             jbes = 3 * ndec + int(c)
 110         continue
 if (output) then
-            if(knd == kindd .and. ioprad /= 0) write(20, 115) x, c, m
+            if(knd == kindd  .and.  ioprad /= 0) write(20, 115) x, c, m
 115         format(1x, e23.14, e23.14, i5)
-            if(knd == kindq .and. ioprad /= 0) write(20, 120) x, c, m
+            if(knd == kindq  .and.  ioprad /= 0) write(20, 120) x, c, m
 120         format(1x, e40.30, e40.30, i5)
 end if
               do 850 li = 1, lnum
@@ -509,16 +509,16 @@ end if
               naccr = -1
               nacce = 0
               limdrad = 3 * ndec + int(c)
-              if(ioprad /= 0 .and. li /= 1) limdrad = jbes + jbes + 20+ &
+              if(ioprad /= 0  .and.  li /= 1) limdrad = jbes + jbes + 20+ &
                                                   int(sqrt(c))
-              if(iopint /= 0 .and. li /= 1 .and. jintm > jbes) &
+              if(iopint /= 0  .and.  li /= 1  .and.  jintm > jbes) &
                   limdrad = jintm + jintm + 20 + int(sqrt(c))
               limdang = 3 * ndec + int(c)
-              if(iopang /= 0 .and. li /= 1) limdang = jang + jang + 20+ &
+              if(iopang /= 0  .and.  li /= 1) limdang = jang + jang + 20+ &
                                                   int(sqrt(c))
               if(iopang == 0) limd = limdrad
               if(ioprad == 0) limd = limdang
-              if(iopang /= 0 .and. ioprad /= 0) limd = max(limdang, limdrad)
+              if(iopang /= 0  .and.  ioprad /= 0) limd = max(limdang, limdrad)
               if(li == 1) limmf = limdang
               if(li > 1) limmf = jmf + jmf + 20 + int(sqrt(c))
               limd = max(limd, limmf)
@@ -536,7 +536,7 @@ end if
                                         5 * ndec + 4 * m + c + 01000)
               if(x1 > 1.0e0_knd) limdneu = 2 * ((lplus) * 0.5e0_knd + 5 * ndec+ &
                                           4 * m + c + 00500)
-              if(iopneu == 2 .and. naccneu > 0) &
+              if(iopneu == 2  .and.  naccneu > 0) &
                      limdneu = jneu + jneu + 20 + int(sqrt(c))
               if(iopneu /= 0) limd = max(limd, limdneu)
               limdeta = limd
@@ -548,9 +548,9 @@ end if
                                            4 * m + c + 01000)
               if(x1 > 1.0e0_knd) limdeta = 2 * ((lplus) * 0.5e0_knd + 5 * ndec+ &
                                           4 * m + c + 00500)
-              if(iopeta == 3 .and. naccrsav > minacc) &
+              if(iopeta == 3  .and.  naccrsav > minacc) &
                               limdeta = jeta + jeta + 500 + c / 10
-              if(iopeta == 3 .and. naccrsav <= minacc) &
+              if(iopeta == 3  .and.  naccrsav <= minacc) &
                               limdeta = jeta + jeta + 500 + c
               if(iopeta /= 0) limd = max(limd, limdeta)
 155           continue
@@ -624,9 +624,9 @@ end if
                               eig3, eig4, ndec, maxd, eigval, eig5, enr, ienro)
               eig(li) = eigval
 if (debug) then
-              if(knd == kindd .and. ioprad /= 0) write(40, 165) l, eigval
+              if(knd == kindd  .and.  ioprad /= 0) write(40, 165) l, eigval
 165           format(1x,'l =',i6, 5x,'eigenvalue =',e23.14)
-              if(knd == kindq .and. ioprad /= 0) write(40, 170) l, eigval
+              if(knd == kindq  .and.  ioprad /= 0) write(40, 170) l, eigval
 170           format(1x,'l =',i6, 5x,'eigenvalue =',e40.30)
 end if
               if(ix == 1) go to 175
@@ -640,9 +640,9 @@ end if
 176           call dnorm (l, m, c, ndec, nex, limd, maxd, enr, sgn, d01, id01, &
                           dmfnorm, idmfe, dmlmf, idmlmfe, dmsnorm, idmse, &
                           dmlms, idmlmse, jmf, jsub)
-              if(li /= 1 .and. eigval <= eigvalp) go to 900
-              if(l == m .and. jsub > jtest .and. iopneu /= 0) iopneu = 0
-              if(l == m .and. jsub > jtest .and. iopleg /= 0) iopleg = 0
+              if(li /= 1  .and.  eigval <= eigvalp) go to 900
+              if(l == m  .and.  jsub > jtest  .and.  iopneu /= 0) iopneu = 0
+              if(l == m  .and.  jsub > jtest  .and.  iopleg /= 0) iopleg = 0
               eigvalp = eigval
 !
 !  determine prolate radial functions of the first kind
@@ -708,8 +708,8 @@ end if
                          icoefn)
               iopint = 2
               if(jint > jintm) jintm = jint
-              wronca = r1c * r2dic * 10.0e0_knd ** (ir1e+ir2die)
-              wroncb = r2ic * r1dc * 10.0e0_knd ** (ir2ie+ir1de)
+              wronca = r1c * r2dic * 10.0e0_knd ** (ir1e + ir2die)
+              wroncb = r2ic * r1dc * 10.0e0_knd ** (ir2ie + ir1de)
               wronc = wronca - wroncb
               naccint = -int(log10(abs((wronc - wront) / wront) + dec))
               if(naccint < 0) naccint = 0
@@ -731,21 +731,21 @@ end if
                 ir2de = ir2die
                 nacce = 0
                 end if
-              if(naccint >= minacc .and. iopneu /= 0) iopneu = 4
-              if(naccint >= minacc .and. (iopeta == 1 .or. iopeta == 2 .or.  &
+              if(naccint >= minacc  .and.  iopneu /= 0) iopneu = 4
+              if(naccint >= minacc  .and.  (iopeta == 1  .or.  iopeta == 2  .or.   &
                    iopeta == 4)) iopeta = 4
               istartr2 = 1
-                if(naccint >= minacc .and. naccintp >= minacc) then
+                if(naccint >= minacc  .and.  naccintp >= minacc) then
                 istartr2 = 0
                 iopneu = 0
                 iopeta = 0
                 end if
-              if(naccint >= minacc .and. ndec - jsub <= naccint .and.  &
+              if(naccint >= minacc  .and.  ndec - jsub <= naccint  .and.   &
                       iopleg /= 0) iopleg = 0
-              if(naccint < minacc .and. x1 <= 0.1e0_knd .and.  &
-                 iopleg == 0 .and. l >= legstart .and.  &
-                 jsub <= ndec - naccint .and. jsub <= ndec - naccrp) iopleg = 1
-              if(naccint == 0 .and. naccintp == 0) iopint = 0
+              if(naccint < minacc  .and.  x1 <= 0.1e0_knd  .and.   &
+                 iopleg == 0  .and.  l >= legstart  .and.   &
+                 jsub <= ndec - naccint  .and.  jsub <= ndec - naccrp) iopleg = 1
+              if(naccint == 0  .and.  naccintp == 0) iopint = 0
 if (debug) then
               if(knd == kindd) write(40, 210) naccint, r2ic, ir2ie, r2dic, &
                                              ir2die
@@ -808,7 +808,7 @@ end if
                 fajo(jl + 1) = fajo(jl + 1) * 1.0e-10_knd
                 ifajo(jl + 1) = ifajo(jl + 1) + 10
 300             end do
-              if(2 * (lnum / 2) == lnum .or. lnum == 2) go to 310
+              if(2 * (lnum / 2) == lnum  .or.  lnum == 2) go to 310
               fajo(lnum) = fajo(lnum - 2) * real((lnum + m + m - 1), knd) / (lnum - 2)
               ifajo(lnum) = ifajo(lnum - 2)
 310           continue
@@ -848,17 +848,17 @@ end if
               if(naccleg >= naccrsav) then
               iopleg = 2
               else
-              if(iopleg == 1 .and. l /= m) iopleg = 0
+              if(iopleg == 1  .and.  l /= m) iopleg = 0
               legstart = l + naccrsav - naccleg
               end if
-              if(naccleg >= minacc .and. nacclegp >= minacc) then
+              if(naccleg >= minacc  .and.  nacclegp >= minacc) then
               iopleg = 2
               iopneu = 0
               iopeta = 0
               end if
-              if(iopint /= 0 .and. naccleg > max(naccint, naccintp) &
-                  .and. nacclegp > max(naccint, naccintp) &
-                  .and. jflagl == 0) iopint = 0
+              if(iopint /= 0  .and.  naccleg > max(naccint, naccintp) &
+                   .and.  nacclegp > max(naccint, naccintp) &
+                   .and.  jflagl == 0) iopint = 0
               nacclegp = naccleg
 if (debug) then
               if(knd == kindd) write(40, 210) naccleg, r2lc, ir2le, r2dlc, &
@@ -913,15 +913,15 @@ end if
                             3.0e0_knd * log10(x1)) + 5 * ndec + 4 * m + c + 01000)
               if(x1 > 1.0e0_knd) limneu = 2 * ((lplus) * 0.5e0_knd + 5 * ndec+ &
                                          4 * m + c + 00500)
-              if(iopneu == 2 .and. naccneu > 0) limneu = jneu + jneu + 20+ &
+              if(iopneu == 2  .and.  naccneu > 0) limneu = jneu + jneu + 20+ &
                                      int(sqrt(c)) + int(1.0e0_knd / x1)
               if(limneu > limp1 - 2) limneu = limp1 - 2
               call r2neu(l, m, c, x1, limneu, ndec, nex, maxd, maxlp, maxn, maxp, &
                          minacc, enr, sneuf, sneun, ineue, sneudf, sneudr, &
                          prat1, pcoefn, ipcoefn, dmfnorm, idmfe, r1dc, ir1de, &
                          r2nc, ir2ne, r2dnc, ir2dne, jneu)
-              wronca = r1c * r2dnc * 10.0e0_knd ** (ir1e+ir2dne)
-              wroncb = r2nc * r1dc * 10.0e0_knd ** (ir2ne+ir1de)
+              wronca = r1c * r2dnc * 10.0e0_knd ** (ir1e + ir2dne)
+              wroncb = r2nc * r1dc * 10.0e0_knd ** (ir2ne + ir1de)
               wronc = wronca - wroncb
               naccneu = -int(log10(abs((wronc - wront) / wront) + dec))
               if(naccneu < 0) naccneu = 0
@@ -953,7 +953,7 @@ end if
               if(naccneu == minacc) then
               if(iopeta /= 0) iopeta = 4
               end if
-              if(iopeta == 0 .and. naccr < minacc .and. nflag == 0) then
+              if(iopeta == 0  .and.  naccr < minacc  .and.  nflag == 0) then
               iopeta = 1
               end if
 if (debug) then
@@ -965,7 +965,7 @@ end if
 420           continue
 !
 !  calculation using the variable eta expansion
-              if(iopeta == 0 .or. iopeta == 4) go to 670
+              if(iopeta == 0  .or.  iopeta == 4) go to 670
                 do 430 inn = 1, 100
                 nees(inn) = 0
                 naccsav(inn) = 0
@@ -1004,7 +1004,7 @@ end if
               limn = 2 * ((lplus) * (-18.5e0_knd - 20.0e0_knd * log10(x1))+ &
                    5 * ndec + 10 * incnee + 4 * m + c + 05000) + m
               if(x1 > 0.08e0_knd) limn = 2 * ((lplus) * (0.5e0_knd- &
-                 3.0e0_knd * log10(x1)) + 10 * ndec + 10 * incnee+4 * m + c + 01000) + m
+                 3.0e0_knd * log10(x1)) + 10 * ndec + 10 * incnee + 4 * m + c + 01000) + m
               if(x1 > 1.0e0_knd) limn = 2 * ((lplus) * 0.5e0_knd + 5 * ndec+ &
                                        10 * incnee + 4 * m + c + 00500) + m
               if(limn > maxn - 2) limn = maxn - 2
@@ -1161,9 +1161,9 @@ end if
                     3.0e0_knd * log10(x1)) + 5 * ndec + 4 * m + c + 01000)
               if(x1 > 1.0e0_knd) limeta = 2 * ((lplus) * 0.5e0_knd + 5 * ndec+ &
                                          4 * m + c + 00500)
-              if(iopeta == 3 .and. naccrsav > minacc) &
+              if(iopeta == 3  .and.  naccrsav > minacc) &
                               limeta = jeta + jeta + 500 + c
-              if(iopeta == 3 .and. naccrsav <= minacc) &
+              if(iopeta == 3  .and.  naccrsav <= minacc) &
                               limeta = jeta + jeta + 500 + c
               if(iopeta == 2) limeta = max(limeta, jeta + jeta + 500 + int(c))
               if(limeta > limp - 2) limeta = limp - 2
@@ -1178,9 +1178,9 @@ end if
                          iopnee, neemark, naccd, naccn, naccnmax, naccns)
               netatry = netatry + 1
               naccetas = nacceta
-              if(naccetas == 0 .and. naccmax == 0 .and. iopnee == 0 &
-                   .and. naccnmax < 3) neemax = nee
-                if(naccetas == naccmax .and. naccetas > 0) then
+              if(naccetas == 0  .and.  naccmax == 0  .and.  iopnee == 0 &
+                    .and.  naccnmax < 3) neemax = nee
+                if(naccetas == naccmax  .and.  naccetas > 0) then
                 kounte = kounte + 1
                 if(kounte == 1) nee1 = nee
                 if(kounte == 2) nee2 = nee
@@ -1208,7 +1208,7 @@ if (debug) then
 end if
               iopeta = 3
               if(naccetas > nacctemp) nacctemp = naccetas
-                if(naccetas > naccr .or. (naccetas == naccr .and.  &
+                if(naccetas > naccr  .or.  (naccetas == naccr  .and.   &
                      nacciop == 0)) then
                 naccr = naccetas
                 r2c = r2ec
@@ -1217,8 +1217,8 @@ end if
                 ir2de = ir2dee
                 nacce = nacciop
                 end if
-              if(iopint /= 0 .and. naccetas > minacc .and. naccint <  &
-                 6 .and. naccintp < 6) iopint = 0
+              if(iopint /= 0  .and.  naccetas > minacc  .and.  naccint <  &
+                 6  .and.  naccintp < 6) iopint = 0
 if (debug) then
 
               if(knd == kindd) write(40, 620) naccetas, etaval, nee, r2ec, &
@@ -1232,12 +1232,12 @@ if (debug) then
                     'eta = ',f12.9,'; nee = ',i4/,10x, &
                      'r2 = ',f34.31, i5, 5x,'r2d = ',f34.31, i5)
 end if
-              if(naccetas > naccetamax .or. (naccetas == 0 .and. naccetamax &
-                  == 0 .and. iopnee == 0)) neemax = nee
+              if(naccetas > naccetamax  .or.  (naccetas == 0  .and.  naccetamax &
+                  == 0  .and.  iopnee == 0)) neemax = nee
               if(naccetas > naccetamax) naccetamax = naccetas
               if(naccetas >= minacc) ietacount = ietacount + 1
               if(ietacount >= 5) incnflag = 1
-                if(naccetas >= minacc .and. iplflag == 0) then
+                if(naccetas >= minacc  .and.  iplflag == 0) then
                 nee = nee - incnee
                 iopeta = 2
                 if(nee < 1) nee = 1
@@ -1245,20 +1245,20 @@ end if
                 end if
                 if(naccetas >= minacc) go to 660
               iopeta = 2
-              if(iplflag == 1 .and. incnflag == 1 .and. netatry == 2) &
+              if(iplflag == 1  .and.  incnflag == 1  .and.  netatry == 2) &
                      iopnee = 0
               ietacount = 0
               insflag = 0
-              if(naccns == ndec .and. x <= 1.11e0_knd) insflag = 1
-              if((naccd >= naccdp .or. naccd >= minacc .or. naccd >= naccrp &
-                   .or. naccd >= naccr) .and. (naccd + naccdp > 0) .and.  &
-                  nee /= neta .and. insflag == 0) iopnee = 0
+              if(naccns == ndec  .and.  x <= 1.11e0_knd) insflag = 1
+              if((naccd >= naccdp  .or.  naccd >= minacc  .or.  naccd >= naccrp &
+                    .or.  naccd >= naccr)  .and.  (naccd + naccdp > 0)  .and.   &
+                  nee /= neta  .and.  insflag == 0) iopnee = 0
               naccdp = naccd
               if(iopnee == 0) go to 650
               if(iopnee == 2) nee = neemax - incnee
               if(iopnee == 1) nee = max(neemark, neemax) - incnee
               if(nee < 1) nee = 1
-              if(iopnee == 2 .and. naccetas < lowtest - 1) go to 640
+              if(iopnee == 2  .and.  naccetas < lowtest - 1) go to 640
               incnee = 8
                 if(knd == kindd) then
                 if(x1 >= 0.01e0_knd) incnee = 16
@@ -1277,26 +1277,26 @@ end if
               if(msearch /= 0) kounter = 0
               go to 440
 660           continue
-              if(naccetas < minacc .and. nee == neta) &
+              if(naccetas < minacc  .and.  nee == neta) &
                      nee = nee - incnee
               if(naccetas < minacc) iopeta = 2
               if(nee /= neta) msearch = 1
               if(naccetas >= minacc) kounter = kounter + 1
-              if(kounter >= (2 * incnee) .and. msearch /= 0) &
+              if(kounter >= (2 * incnee)  .and.  msearch /= 0) &
                      incnee = 2 * incnee
               if(incnee > 64) incnee = 64
                 if(knd == kindd) then
-                if(x1 <= 0.2e0_knd .and. incnee > 32) incnee = 32
-                if(x1 <= 0.15e0_knd .and. incnee > 16) incnee = 16
+                if(x1 <= 0.2e0_knd  .and.  incnee > 32) incnee = 32
+                if(x1 <= 0.15e0_knd  .and.  incnee > 16) incnee = 16
                 end if
                 if(knd == kindq) then
-                if(x1 <= 0.1e0_knd .and. incnee > 32) incnee = 32
+                if(x1 <= 0.1e0_knd  .and.  incnee > 32) incnee = 32
                 end if
-              if(iopint /= 0 .and. naccetas < lowacc) iopeta = 0
+              if(iopint /= 0  .and.  naccetas < lowacc) iopeta = 0
               if(iopeta == 0) nacctest = naccetas
               if(naccetas < minacc) iplflag = 0
               naccetap = naccetamax
-665           if(naccetas < minacc .and. iflagnee == 0) iflagnee = 1
+665           if(naccetas < minacc  .and.  iflagnee == 0) iflagnee = 1
               if(nee < neest) nee = neest
 670           if(naccr > 0) go to 680
               naccr = 0
@@ -1328,22 +1328,22 @@ end if
               if(lowacc > naccr) lowacc = naccr
               if(iopint /= 0) naccintp = naccint
                 if(istartr2 == 1) then
-                if(ndec - jsub > naccr .and. x1 <= 0.4e0_knd .and.  &
-                   iopleg == 0 .and. l >= legstart) iopleg = 1
-                if(ndec - jsub > naccr .and. x1 >= 0.00065e0_knd .and.  &
-                   iopneu == 0 .and. iopleg /= 2) iopneu = 1
-                if(iopeta == 0 .and. x1 >= 0.00065e0_knd .and. iopneu == 0 &
-                    .and. iopleg /= 2) iopeta = 1
+                if(ndec - jsub > naccr  .and.  x1 <= 0.4e0_knd  .and.   &
+                   iopleg == 0  .and.  l >= legstart) iopleg = 1
+                if(ndec - jsub > naccr  .and.  x1 >= 0.00065e0_knd  .and.   &
+                   iopneu == 0  .and.  iopleg /= 2) iopneu = 1
+                if(iopeta == 0  .and.  x1 >= 0.00065e0_knd  .and.  iopneu == 0 &
+                     .and.  iopleg /= 2) iopeta = 1
                 end if
               if(iopeta == 4) iopeta = 1
-              if((naccr < legtest .or. naccrp < legtest) .and.  &
-                  x1 <= 0.01e0_knd .and. l > legstart .and. iopleg == 0) &
+              if((naccr < legtest  .or.  naccrp < legtest)  .and.   &
+                  x1 <= 0.01e0_knd  .and.  l > legstart  .and.  iopleg == 0) &
                   iopleg = 1
-              if(iopneu == 0 .and. naccr < minacc .and. naccrp < minacc &
-                  .and. ndec - jsub > naccr .and. ndec - jsub > naccrp .and.  &
+              if(iopneu == 0  .and.  naccr < minacc  .and.  naccrp < minacc &
+                   .and.  ndec - jsub > naccr  .and.  ndec - jsub > naccrp  .and.   &
                  x1 >= 0.00065e0_knd) iopneu = 1
               naccrp = naccr
-                if(ioprad == 2 .and. naccr < 6) then
+                if(ioprad == 2  .and.  naccr < 6) then
                 write(60,*) ' est. acc. = ',naccr, ' digits for x = ', &
                           x,' c = ', c,' m = ',m,' l = ',l
                 end if
@@ -1377,10 +1377,10 @@ if (output) then
 760             format(1x, f19.14, 2x, f17.14, 2x, i5, 2x, f17.14, 2x, i5, 2x, i2)
 end if
 if (debug) then
-                if(knd == kindd .and. iopang == 1) write(50, 770) s1c(jarg), is1e(jarg)
-                if(knd == kindd .and. iopang == 2) write(50, 780) s1c(jarg), is1e(jarg), s1dc(jarg), is1de(jarg)
-                if(knd == kindq .and. iopang == 1) write(50, 790) s1c(jarg), is1e(jarg)
-                if(knd == kindq .and. iopang == 2) write(50, 800)s1c(jarg), is1e(jarg), s1dc(jarg), is1de(jarg)
+                if(knd == kindd  .and.  iopang == 1) write(50, 770) s1c(jarg), is1e(jarg)
+                if(knd == kindd  .and.  iopang == 2) write(50, 780) s1c(jarg), is1e(jarg), s1dc(jarg), is1de(jarg)
+                if(knd == kindq  .and.  iopang == 1) write(50, 790) s1c(jarg), is1e(jarg)
+                if(knd == kindq  .and.  iopang == 2) write(50, 800)s1c(jarg), is1e(jarg), s1dc(jarg), is1de(jarg)
 770             format(12x,'s1 = ',f17.14, 2x, i5)
 780             format(12x,'s1 = ',f17.14, 2x, i5, 5x,'s1d = ',f17.14, 2x, i5)
 790             format(12x,'s1 = ',f34.31, 2x, i5)
@@ -1628,9 +1628,9 @@ end if
 !  compute the angular function s1
           do 380 k = 1, narg
           if(pnorm(k) == 0.0e0_knd) go to 220
-          if((ix == 1) .and. (abs(barg(k)) < adec)) go to 220
+          if((ix == 1)  .and.  (abs(barg(k)) < adec)) go to 220
           if(((abs(abs(barg(k)) - 1.0e0_knd)) < adec) &
-                .and. (m /= 0)) go to 220
+                 .and.  (m /= 0)) go to 220
           go to 230
 220       s1c(k) = 0.0e0_knd
           is1e(k) = 0
@@ -1686,9 +1686,9 @@ end if
 !       iopang equals 2
 300       if(iopang /= 2) go to 380
           if(pnorm(k) == 0.0e0_knd) go to 310
-          if((ix == 0) .and. (abs(barg(k)) < adec)) go to 310
-          if(((abs(abs(barg(k)) - 1.0e0_knd)) < adec) .and. (m /= 0) &
-               .and. (m /= 2)) go to 310
+          if((ix == 0)  .and.  (abs(barg(k)) < adec)) go to 310
+          if(((abs(abs(barg(k)) - 1.0e0_knd)) < adec)  .and.  (m /= 0) &
+                .and.  (m /= 2)) go to 310
           go to 320
 310       s1dc(k) = 0.0e0_knd
           is1de(k) = 0
@@ -1706,7 +1706,7 @@ end if
           doldd = 1.0e0_knd
           j = lm2
           ja = lm2
-          if(m == 0 .and. ix == 0) ja = lm2 - 1
+          if(m == 0  .and.  ix == 0) ja = lm2 - 1
           if(ja == 0) go to 360
             do 350 jj = 1, ja
             dnewd = doldd / (pdr(k, j + j + ixx2) * enr(j))
@@ -1825,8 +1825,8 @@ end if
         ir1tope = 0
         mml = m + m - 1 + ix
         iflagd = 0
-        if(x1 < 0.1e0_knd .and. ix == 1 .and. m == 0) iflagd = 1
-        if(iflagd == 1 .and. l /= 1) factor = factor * real(l, knd) / (l - 1)
+        if(x1 < 0.1e0_knd  .and.  ix == 1  .and.  m == 0) iflagd = 1
+        if(iflagd == 1  .and.  l /= 1) factor = factor * real(l, knd) / (l - 1)
 !
 !
 !  compute radial function of the first kind r1 and its first
@@ -1863,7 +1863,7 @@ if (debug) then
 40      format(8x,'r1bes: numerator series converged in ',i6,' terms; ', &
                i6,' available.' )
 end if
-        if(iflagd == 0 .or. l /= 1) go to 45
+        if(iflagd == 0  .or.  l /= 1) go to 45
         r1topd = r1top - 1.0e0_knd
         r1dtopd = r1dtop - 1.0e0_knd
 45      continue
@@ -1963,7 +1963,7 @@ end if
         ndsub = ndsub + ndsub1 + ndsub2
 150     continue
 if (debug) then
-        if(ix == 1 .and. ndsub > 0) write(40, 160) ndsub
+        if(ix == 1  .and.  ndsub > 0) write(40, 160) ndsub
 160     format(24x,'subtraction error in forming r1d =',i3,' digits.')
 end if
         iterm = log10(abs(r1d))
@@ -2098,8 +2098,8 @@ end if
 20      continue
         if(ix == 0) coefa = (rm2 + 1.0e0_knd) * coefn
         if(ix == 1) coefa = (rm2 + 3.0e0_knd) * coefn
-        if((ix == 0) .and. (2 * (lm2 / 2) /= lm2)) coefa = -coefa
-        if((ix == 1) .and. (2 * ((l - m - 1) / 4) /= (l - m - 1) / 2)) coefa = -coefa
+        if((ix == 0)  .and.  (2 * (lm2 / 2) /= lm2)) coefa = -coefa
+        if((ix == 1)  .and.  (2 * ((l - m - 1) / 4) /= (l - m - 1) / 2)) coefa = -coefa
         coefl = coefa / d01
         icoefl = -id01 + icoefn
         dec = 10.0e0_knd ** (-ndec - 1)
@@ -2404,7 +2404,7 @@ end if
           dnewd = doldd / (qdr(j + j + imxp) * qdr(j + j + imxp - 1) * enr(j))
           qdsum = qdsum + dnewd
           if(dnewd > 0.0e0_knd) qdsump = qdsump + dnewd
-            if(int(log10(abs(qsum))) + iscale > itestq .and. iflagq == 0) &
+            if(int(log10(abs(qsum))) + iscale > itestq  .and.  iflagq == 0) &
                 then
             r2c = 0.0e0_knd
             r2dc = 0.0e0_knd
@@ -2486,7 +2486,7 @@ end if
         nmterm = 0
         nsqnsum = 0
         nsqndsum = 0
-        if(iopqnsum == 0 .or. m == 0) go to 90
+        if(iopqnsum == 0  .or.  m == 0) go to 90
         nmterm = m
         qnsum = enrneg(m)
         qndsum = enrneg(m)
@@ -2544,7 +2544,7 @@ end if
         pdsum = pdrx(ixx + 1) * drhor(1)
         dold = psum
         doldd = pdsum
-        if(m /= 0 .or. ix /= 1) go to 100
+        if(m /= 0  .or.  ix /= 1) go to 100
         pdsum = 0.0e0_knd
         doldd = drhor(1)
 100     continue
@@ -2566,7 +2566,7 @@ end if
           if(dnew > 0.0e0_knd) psump = psump + dnew
           dnewd = doldd * drhor(j) * pdrx(j + j - ix)
           pdsum = pdsum + dnewd
-            if(int(log10(abs(psum))) > itestp .and. iflagp == 0) then
+            if(int(log10(abs(psum))) > itestp  .and.  iflagp == 0) then
             r2c = 0.0e0_knd
             r2dc = 0.0e0_knd
             ir2e = 0
@@ -2580,12 +2580,12 @@ end if
           if(dnewd > 0.0e0_knd) pdsump = pdsump + dnewd
           test = abs(dnew / psum)
           testd = abs(dnewd / pdsum)
-          if(test > testm .or. test == 00.0e0_knd) go to 110
+          if(test > testm  .or.  test == 00.0e0_knd) go to 110
           testm = test
           spsum = psum
           spsump = psump
           jlegpf = j
-110       if(testd > testdm .or. testd == 00.0e0_knd) go to 120
+110       if(testd > testdm  .or.  testd == 00.0e0_knd) go to 120
           testdm = testd
           spdsum = pdsum
           spdsump = pdsump
@@ -2657,11 +2657,11 @@ end if
         nqnds = 0
         if(qndsum / r2dc /= 0.0e0_knd) &
                       nqnds = int(log10(abs(qndsum / r2dc)))
-        if(qnsum == 0.0e0_knd .and. qndsum == 0.0e0_knd) iopqnsum = 0
+        if(qnsum == 0.0e0_knd  .and.  qndsum == 0.0e0_knd) iopqnsum = 0
         npds = 0
         if(pdsum / r2dc /= 0.0e0_knd) &
                       npds = int(log10(abs(pdsum / r2dc)))
-        if(psum == 0.0e0_knd .and. pdsum == 0.0e0_knd) ioppsum = 0
+        if(psum == 0.0e0_knd  .and.  pdsum == 0.0e0_knd) ioppsum = 0
         nsqdsum = nsqdsum + nqds
         if(nsqdsum < 0) nsqdsum = 0
         if(nsqdsum > ndec) nsqdsum = ndec
@@ -2675,9 +2675,9 @@ end if
         if(nspdsum > ndec) nspdsum = ndec
         if(pdsum / r2dc == 0.0e0_knd) nspdsum = 0
         nsubd = max(nsqdsum, nsqndsum, nspdsum)
-        if(qnsum == 0.0e0_knd .and. qndsum == 0.0e0_knd) iopqnsum = 0
-        if(psum == 0.0e0_knd .and. pdsum == 0.0e0_knd) ioppsum = 0
-        wronca = r1c * r2dc * 10.0e0_knd ** (ir1e+iqsum)
+        if(qnsum == 0.0e0_knd  .and.  qndsum == 0.0e0_knd) iopqnsum = 0
+        if(psum == 0.0e0_knd  .and.  pdsum == 0.0e0_knd) ioppsum = 0
+        wronca = r1c * r2dc * 10.0e0_knd ** (ir1e + iqsum)
         wroncb = r2c * r1dc * 10.0e0_knd ** (iqsum + ir1de)
         wronc = wronca - wroncb
         naccleg = -int(log10(abs((wronc - wront) / wront) + dec))
@@ -2688,7 +2688,7 @@ end if
         if(naccleg > 1) naccleg = naccleg + nsubw
         itest = ndec - 2 - nsubw - max(nsub, nsubd)
         if(itest < 0) itest = 0
-        if(naccleg < minacc .and. naccleg < itest .and. x1 <= 0.01e0_knd) &
+        if(naccleg < minacc  .and.  naccleg < itest  .and.  x1 <= 0.01e0_knd) &
              then
           fac = wront / wronc
           qsum = qsum * fac
@@ -2702,9 +2702,9 @@ end if
           jflagl = 1
           naccleg = itest
           end if
-        if(naccleg > 3 .and. nps < (-ndec - 1) .and. npds < (-ndec - 1)) &
+        if(naccleg > 3  .and.  nps < (-ndec - 1)  .and.  npds < (-ndec - 1)) &
              ioppsum = 0
-        if(naccleg > 3 .and. nqns < (-ndec - 1) .and. nqnds < (-ndec - 1)) &
+        if(naccleg > 3  .and.  nqns < (-ndec - 1)  .and.  nqnds < (-ndec - 1)) &
             iopqnsum = 0
         if(naccleg < 0) naccleg = 0
           if(jflagl == 0) then
@@ -2726,25 +2726,25 @@ end if
         ir2de = ir2de - 1
 180     continue
 if (debug) then
-        if(ioppsum == 1 .and. iopqnsum == 1) write(40, 190) jleg, jlegp, &
+        if(ioppsum == 1  .and.  iopqnsum == 1) write(40, 190) jleg, jlegp, &
                                             m, lim1, lim2, m, nsub, nsubd
 190     format(8x,'r2leg: qsum, psum and qnsum series converged in ',i6, &
               ',' i6,' and ',i4,' terms; ',i6,',' i6,' and ' i4, &
               ' terms avail.',/,15x, i2,' and ',i2,' digits of sub.', &
               ' error in r2 and r2d.')
-        if(ioppsum == 1 .and. iopqnsum == 0) write(40, 200) jleg, jlegp, &
+        if(ioppsum == 1  .and.  iopqnsum == 0) write(40, 200) jleg, jlegp, &
                                            lim1, lim2, nsub, nsubd
 200     format(8x,'r2leg: qsum and psum series converged in ',i6, &
               ' and ',i6,' terms; ',i6,' and ',i6,' terms avail.',/, &
               15x, i2,' and ',i2,' digits of sub. error in r2 and r2d;', &
               ' qnsum is negligible.')
-        if(ioppsum == 0 .and. iopqnsum == 1) write(40, 210) jleg, m, &
+        if(ioppsum == 0  .and.  iopqnsum == 1) write(40, 210) jleg, m, &
                                            lim1, m, nsub, nsubd
  210     format(8x,'r2leg: qsum and qnsum series converged in ',i6, &
               ' and ',i4,' terms; ',i6,' and ',i4,' terms avail.',/, &
                15x, i2,' and ',i2,' digits of sub. error in r2 and r2d;' &
                ' psum is negligible.')
-         if(ioppsum == 0 .and. iopqnsum == 0) write(40, 220) jleg, lim1, &
+         if(ioppsum == 0  .and.  iopqnsum == 0) write(40, 220) jleg, lim1, &
                                                   nsub, nsubd
  220     format(8x,'r2leg: qsum series converged in ',i6,' terms with ', &
                i6,' terms avail.; 'i2,' and ',i2,' digits of',/,15x, &
@@ -2980,7 +2980,7 @@ end if
         ir2e = ir2e - 1
 110     continue
         r2dc = r2dcoef * r2c + (c * r2dtemp * sneun(l + 1) * sneudr(l + 1) * pcoefn/ &
-             dmfnorm) * 10.0e0_knd ** (ineue(l + 1) + ipcoefn - idmfe+iscale-ir2e)
+             dmfnorm) * 10.0e0_knd ** (ineue(l + 1) + ipcoefn - idmfe + iscale-ir2e)
         iterm = int(log10(abs(r2dc)))
         ir2de = ir2e + iterm
         r2dc = r2dc * 10.0e0_knd ** (-iterm)
@@ -3237,7 +3237,7 @@ end if
           doldd2 = dnewd2
 50        continue
 60      continue
-          if(m == 0 .and. jj == 2) then
+          if(m == 0  .and.  jj == 2) then
           r2dtemp1 = r2dtemp1 - dnewd1
           if(dnewd1 > 0.0e0_knd) sumdnp1 = sumdnp1 - dnewd1
           end if
@@ -3275,7 +3275,7 @@ end if
           dnew = -dold * enr(j) * sneuf(jj + m) * pratt(jj + 1)
           dnewd1 = -doldd1 * enr(j) * sneuf(jj + m) * pdratt(jj + 1)
           dnewd2 = -doldd2 * enr(j) * sneudf(jj + m) * pratt(jj + 1)
-          if((dnew / dold) <= 0.0e0_knd .or. kount == 100) go to 70
+          if((dnew / dold) <= 0.0e0_knd  .or.  kount == 100) go to 70
           dnewsum = dnewsum + dnew
           go to 80
 70        r2temp = r2temp + dnewsum
@@ -3289,7 +3289,7 @@ end if
           sr2temp = r2temp
           js = j
           tx = sumnp
-80        if((dnewd1 / doldd1 <= 0.0e0_knd) .or. (kountd1 == 100)) &
+80        if((dnewd1 / doldd1 <= 0.0e0_knd)  .or.  (kountd1 == 100)) &
                   go to 85
           dnewdsum1 = dnewdsum1 + dnewd1
           go to 90
@@ -3303,7 +3303,7 @@ end if
           sr2dtemp1 = r2dtemp1
           jds1 = j
           txd1 = sumdnp1
-90        if(((dnewd2 / doldd2) <= 0.0e0_knd) .or. (kountd2 == 100)) &
+90        if(((dnewd2 / doldd2) <= 0.0e0_knd)  .or.  (kountd2 == 100)) &
                   go to 95
           dnewdsum2 = dnewdsum2 + dnewd2
           go to 100
@@ -3433,8 +3433,8 @@ if (debug) then
                'estimated numerator and denominator accuracy is ',i4, &
                ' and',i4,' digits.')
 end if
-        wronca = r1c * r2dc * (10.0e0_knd ** (ir1e+ir2de))
-        wroncb = r2c * r1dc * (10.0e0_knd ** (ir2e+ir1de))
+        wronca = r1c * r2dc * (10.0e0_knd ** (ir1e + ir2de))
+        wroncb = r2c * r1dc * (10.0e0_knd ** (ir2e + ir1de))
         wronc = wronca - wroncb
         wront = 1.0e0_knd / (c * x1 * (x1 + 2.0e0_knd))
         wroncm = max(abs(wronca), abs(wroncb))
@@ -3442,10 +3442,10 @@ end if
         nacceta = -int(log10(abs((wronc - wront) / wront) + dec))
         if(nacceta < 0) nacceta = 0
         nacciop = 0
-        if(nacceta < minacc .and. naccn - nsubw > naccd .and. naccn >  &
-            nacceta .and. (naccn >= min(naccr, 4) .or. (jtestm >= ndec - 1 .and.  &
+        if(nacceta < minacc  .and.  naccn - nsubw > naccd  .and.  naccn >  &
+            nacceta  .and.  (naccn >= min(naccr, 4)  .or.  (jtestm >= ndec - 1  .and.   &
             jtestdm >= ndec - 1))) nacciop = 1
-        if(jtestm < 5 .or. jtestdm < 5) nacciop = 0
+        if(jtestm < 5  .or.  jtestdm < 5) nacciop = 0
         if(naccn - nsubw <= naccr) nacciop = 0
         if(nacciop == 0) go to 160
 if (debug) then
@@ -3472,20 +3472,20 @@ end if
         ir2de = ir2de - 1
 180     continue
         naccnmaxp = naccnmax
-        if(naccnmax > naccn .and. naccnmax >= 3) iopnee = 1
+        if(naccnmax > naccn  .and.  naccnmax >= 3) iopnee = 1
         if(naccn > naccnmax) naccnmax = naccn
         if(ndec - naccns < naccr + 2) iopnee = 2
-        if(nacciop == 0 .and. naccn > nacceta) naccnmax = max(naccnmaxp, &
+        if(nacciop == 0  .and.  naccn > nacceta) naccnmax = max(naccnmaxp, &
            nacceta)
-          if(nacceta < 3 .and. naccmax == 0 .and. ndec - naccns >=  &
+          if(nacceta < 3  .and.  naccmax == 0  .and.  ndec - naccns >=  &
               naccr) then
           iopnee = 0
           neemark = nee
           end if
         if(ndec - naccns >= naccr + 2) iopnee = 0
-        if(jtestm == ndec .and. jtestdm == ndec .and. naccn <= max(naccr, 5)) &
+        if(jtestm == ndec  .and.  jtestdm == ndec  .and.  naccn <= max(naccr, 5)) &
             iopnee = 2
-        if(naccns1 == ndec .or. naccns2 == ndec) iopnee = 2
+        if(naccns1 == ndec  .or.  naccns2 == ndec) iopnee = 2
         return
         end subroutine
 !
@@ -3522,7 +3522,7 @@ end if
         sm = m * m
 !
 !  special case for small m and large c
-        if(l == (m + 4) .and. c > 8.0e0_knd .and. m < 3) go to 60
+        if(l == (m + 4)  .and.  c > 8.0e0_knd  .and.  m < 3) go to 60
 !
 !  if previous values have been computed use these to determine
 !  the next value
@@ -3531,11 +3531,11 @@ end if
 !  use expansion in terms of c**2 for low c, and
 !  expansion in terms of c for large c (c>8)
         if(c > 80.0e0_knd) go to 60
-        if(c > 6.0e0_knd .and. m < 4) go to 60
-        if(c > 3.0e0_knd .and. l == 0) go to 60
-        if(c > 4.0e0_knd .and. l == 1) go to 60
-        if(c > 5.0e0_knd .and. l == 2) go to 60
-        if(c > 5.0e0_knd .and. l > (m + 1)) go to 10
+        if(c > 6.0e0_knd  .and.  m < 4) go to 60
+        if(c > 3.0e0_knd  .and.  l == 0) go to 60
+        if(c > 4.0e0_knd  .and.  l == 1) go to 60
+        if(c > 5.0e0_knd  .and.  l == 2) go to 60
+        if(c > 5.0e0_knd  .and.  l > (m + 1)) go to 10
 !
 !  compute coefficients for c**2 expansion
         lam1 = rl * (rl + 1.0e0_knd)
@@ -3577,7 +3577,7 @@ end if
         ic = c
 !
 !  if m>6 the eigenvalues are very regularly spaced
-        if(m > 6 .and. l > m + 1) go to 10
+        if(m > 6  .and.  l > m + 1) go to 10
 !
 !  n*(n+1) behavior reached?
         if(m < (10 + ic)) go to 70
@@ -3637,16 +3637,16 @@ end if
         csq = c * c
         dec = 10.0e0_knd ** (-ndec - 1)
         eigdec = 10.0e0_knd ** (-ndec + 1)
-        if(l == m .or. l == m + 1) imax = 1
+        if(l == m  .or.  l == m + 1) imax = 1
 !
 !  set the original eigenvalue spacing estimate. this is arbitrary
         if(eigval < eig4) eigval = eig4
         if(l > m) cll = eig4
-        if(l == (m + 2) .or. l == (m + 3)) clu = eigval + 0.5e0_knd * (eigval - eig3)
+        if(l == (m + 2)  .or.  l == (m + 3)) clu = eigval + 0.5e0_knd * (eigval - eig3)
         if(l > (m + 3)) clu = eigval + 0.5e0_knd * (eig3 - eig1)
         lm2 = (l - m) / 2
         limdb = 2 * ienr + 50
-        if(l == m .or. l == m + 1) limdb = 2 * ienr
+        if(l == m  .or.  l == m + 1) limdb = 2 * ienr
         if(limdb > limd) limdb = limd
 !
 !  begin Bouwkamp procedure
@@ -3685,11 +3685,11 @@ end if
           do 90 i = iw1, lim2
           de = enr(i) * enr(i) / blist(i) * de
           corb = corb + de
-          if(abs(de / corb) < dec .and. (l == m .or. l == m + 1 .or.  &
+          if(abs(de / corb) < dec  .and.  (l == m  .or.  l == m + 1  .or.   &
              i > ienr - 20)) go to 100
 90        continue
-100     if((l == m .or. l == m + 1) .and. i > imax) imax = i
-        if(l /= m .and. l /= m + 1 .and. i > ienr) ienr = i
+100     if((l == m  .or.  l == m + 1)  .and.  i > imax) imax = i
+        if(l /= m  .and.  l /= m + 1  .and.  i > ienr) ienr = i
         de = 1.0e0_knd
         cora = de
         if(lm2 < 1) go to 120
@@ -3714,7 +3714,7 @@ end if
 !  is the eigenvalue the correct one
 !  if not then modify the original guess
 !
-        if(l == m .or. l == (m + 1)) go to 180
+        if(l == m  .or.  l == (m + 1)) go to 180
         if(eigval > cll) go to 140
 !
 !  converged to next lower eigenvalue of the same parity
@@ -3738,7 +3738,7 @@ end if
         if(jnde == 50) go to 210
         go to 40
 180     eig5 = eigval
-        if(l == m .or. l == m + 1) ienr = imax
+        if(l == m  .or.  l == m + 1) ienr = imax
 !
 !  calculate the d coefficient ratios (enr)
         enr(1) = eigval - glist(1)
@@ -3883,7 +3883,7 @@ end if
 30        continue
 40      jlow = l - m
         jmf = jterm
-        if(jlow < 2 .or. iflag == 1) go to 60
+        if(jlow < 2  .or.  iflag == 1) go to 60
         term = 1.0e0_knd
         jterm = lm2
           do 50 j = jlow, 2,-2
@@ -3958,7 +3958,7 @@ end if
 160     jlow = l - m
         jn = jterm
         jnorm = max(jmf, jn)
-        if(jlow < 2 .or. jflag == 1) go to 180
+        if(jlow < 2  .or.  jflag == 1) go to 180
         coef = 1.0e0_knd
         jterm = lm2
         j = jlow
@@ -4458,7 +4458,7 @@ end if
 !   pdr(k,j) = ----------------------------------------------------
 !                  pr(k,j)+coefd(j)+coefe(j)*barg(k)*barg(k)
 !
-          if(iopd == 0 .or. iopd == 2) go to 120
+          if(iopd == 0  .or.  iopd == 2) go to 120
           pdr(k, 1) = 1.0e0_knd
           pdr(k, 2) = 1.0e0_knd
           if(abs(barg(k)) >= adec) go to 50
@@ -4514,7 +4514,7 @@ end if
             do j = jlow, lim + 2
             pdr(k, j) = pdr1(j - 2) * pdr1(j - 1)
             end do
-120       if(m == 0 .or. iopd == 2 .or. iopd == 3) go to 140
+120       if(m == 0  .or.  iopd == 2  .or.  iopd == 3) go to 140
           if(abs(abs(barg(k)) - 1.0e0_knd) < adec) go to 130
           ajterm = rm * log10(1.0e0_knd - bargs) / 2.0e0_knd
           jterm = int(ajterm)
@@ -4611,7 +4611,7 @@ end if
         if(m == 2) mlimq = 5000 * ndec + limq
         if(m == 3) mlimq = 600 * ndec + limq
         if(m >= 4) mlimq = 100 * ndec + limq
-        if(m == 1 .and. x1 < 1.0e-9_knd) mlimq = 50000 * ndec + limq
+        if(m == 1  .and.  x1 < 1.0e-9_knd) mlimq = 50000 * ndec + limq
         mxqr = min(mxqrest, mlimq)
         mxqrpm = mxqr + m
 if (debug) then
@@ -5148,7 +5148,7 @@ end if
         stemp1 = stemp0 / cx - cos(cx) / cx
         ibese(1) = int(log10(abs(stemp0)))
         sbesn(1) = stemp0 * 10.0e0_knd ** (-ibese(1))
-        if(abs(sin(cx)) < 0.5e0_knd .and. cx > 1.0e0_knd) go to 70
+        if(abs(sin(cx)) < 0.5e0_knd  .and.  cx > 1.0e0_knd) go to 70
         sbesn(2) = sbesn(1) * sbesf(1)
         ibese(2) = int(log10(abs(sbesn(2))))
         sbesn(2) = sbesn(2) * 10.0e0_knd ** (-ibese(2))
