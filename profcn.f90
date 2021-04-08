@@ -444,8 +444,8 @@ end if
 if (debug) then
           if(knd.eq.kindd.and.ioprad.ne.0) write(40,25) x,c
 25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
-          if(knd.eq.kindq.and.ioprad.ne.0) write(40,25) x,c
-30        format(1x,'x = ',e39.31,/,1x,'c = ',e39.31)
+          if(knd.eq.kindq.and.ioprad.ne.0) write(40,30) x,c
+30        format(1x,'x = ',e40.30,/,1x,'c = ',e40.30)
           if(knd.eq.kindd.and.iopang.ne.0) write(50,35) c,m
 35        format(1x,'c = ',e23.14,'; m = ',i5)
           if(knd.eq.kindq.and.iopang.ne.0) write(50,40) c,m

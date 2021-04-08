@@ -359,8 +359,8 @@ module prolate_swf
 if (debug) then
           if(knd == kindd  .and.  ioprad /= 0) write(40, 25) x, c
 25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
-          if(knd == kindq  .and.  ioprad /= 0) write(40, 25) x, c
-30        format(1x,'x = ',e39.31,/,1x,'c = ',e39.31)
+          if(knd == kindq  .and.  ioprad /= 0) write(40, 30) x, c
+30        format(1x,'x = ',e40.30,/,1x,'c = ',e40.30)
 end if
           nc = int(log10(c))
           if(nc < 0) nc = 0
