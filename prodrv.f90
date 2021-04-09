@@ -56,7 +56,7 @@ program prodrv
             if(knd == kindd) write(20, 10) x1 + 1.00e0_knd, c, m
             if(knd == kindq) write(20, 20) x1 + 1.00e0_knd, c, m
 10          format(1x,e23.14,e23.14,i5)
-20          format(1x,e40.30,e40.30,i5)
+20          format(1x,e39.30,e39.30,i5)
             
             do i = 1, lnum
                 l = m + i - 1
@@ -73,7 +73,7 @@ program prodrv
             if(knd == kindd) write(30, 30) c, m
             if(knd == kindq) write(30, 40) c, m
 30          format(1x,e23.14,i5)
-40          format(1x,e40.30,i5)
+40          format(1x,e39.30,i5)
             
             do i = 1, lnum
                 l = m + i - 1

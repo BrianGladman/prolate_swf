@@ -38,18 +38,9 @@ program profcn
 !    logical, parameter :: output = .true.
 !    end module param
 !  Set the value of knd in the parenthesis to either 8 for double
-!  precision or 16 for quadruple precision arithmetic. Some compilers
-!  require that param be compiled prior to rather than after profcn.
-!  The logicals in param are described in the readme file and below in
-!  the discussion of the output files.
-!
-!  Profcn can be run in either double precision or quadruple precision
-!  arithmetic. The choice is set in the module param located above at
-!  the beginning of profcn. Here, the kind parameter knd is set by the
-!  statement:
-!      integer, parameter :: knd = selected_real_kind(8)
-!  Set the value of knd in the parenthesis to either 8 for double
-!  precision or 16 for quadruple precision arithmetic.
+!  precision or 16 for quadruple precision arithmetic. The logicals
+!  in param are described in the readme file and below in the
+!  discussion of the output files.
 !
 !  Profcn provides accurate results over very wide parameter ranges when
 !  using double precision. It provides higher accuracy using quadruple
@@ -445,11 +436,11 @@ if (debug) then
           if(knd.eq.kindd.and.ioprad.ne.0) write(40,25) x,c
 25        format(1x,'x = ',e23.14,/,1x,'c = ',e23.14)
           if(knd.eq.kindq.and.ioprad.ne.0) write(40,30) x,c
-30        format(1x,'x = ',e40.30,/,1x,'c = ',e40.30)
+30        format(1x,'x = ',e39.30,/,1x,'c = ',e39.30)
           if(knd.eq.kindd.and.iopang.ne.0) write(50,35) c,m
 35        format(1x,'c = ',e23.14,'; m = ',i5)
           if(knd.eq.kindq.and.iopang.ne.0) write(50,40) c,m
-40        format(1x,'c = ',e40.30,'; m = ',i5)
+40        format(1x,'c = ',e39.30,'; m = ',i5)
           if(ioprad.ne.0) write(40,50) m
 50        format(1x,'m = ',i5)
 end if
@@ -457,7 +448,7 @@ if (output) then
              if(knd.eq.kindd.and.iopang.ne.0) write(30,60) c,m
  60          format(1x,e23.14,i5)
              if(knd.eq.kindq.and.iopang.ne.0) write(30,70) c,m
- 70          format(1x,e40.30,i5)
+ 70          format(1x,e39.30,i5)
 end if
             rm=m
             rm2=m+m
@@ -553,7 +544,7 @@ if (output) then
             if(knd.eq.kindd.and.ioprad.ne.0) write(20,115) x,c,m
 115         format(1x,e23.14,e23.14,i5)
             if(knd.eq.kindq.and.ioprad.ne.0) write(20,120) x,c,m
-120         format(1x,e40.30,e40.30,i5)
+120         format(1x,e39.30,e39.30,i5)
 end if
               do 850 li=1,lnum
               l=m+(li-1)
@@ -704,7 +695,7 @@ if (debug) then
               if(knd.eq.kindd.and.ioprad.ne.0) write(40,165) l,eigval
 165           format(1x,'l =',i6,5x,'eigenvalue =',e23.14)
               if(knd.eq.kindq.and.ioprad.ne.0) write(40,170) l,eigval
-170           format(1x,'l =',i6,5x,'eigenvalue =',e40.30)
+170           format(1x,'l =',i6,5x,'eigenvalue =',e39.30)
 end if
               if(ix.eq.1) go to 175
               limdle=limd+2
