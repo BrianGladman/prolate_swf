@@ -22,6 +22,9 @@ program prodrv
     open(1, file='profcn.dat')
     open(20 ,file='fort.20')
     open(30, file='fort.30')
+    open(40 ,file='fort.20')
+    open(50, file='fort.30')
+    open(60, file='fort.30')
     
 !
 !   read input data
@@ -91,8 +94,8 @@ program prodrv
                         if(iopang == 1) write(30, 60) arg(j), s1c(i, j), is1e(i, j), naccs(i, j)
                         if(iopang == 2) write(30, 70) arg(j), s1c(i, j), is1e(i, j), s1dc(i, j), is1de(i, j), naccs(i, j)
                     end if    
-60                  format(1x,f19.14,2x,f17.14,2x,i5,2x,', ',i2)
-70                  format(1x,f19.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
+60                  format(1x,f17.14,2x,f17.14,2x,i5,2x,', ',i2)
+70                  format(1x,f17.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
                 end do
             end do
         end if
@@ -102,9 +105,12 @@ program prodrv
     deallocate (s1c, s1dc)
     deallocate (ir1e, ir1de, ir2e, ir2de, naccr)
     deallocate (arg, r1c, r1dc, r2c, r2dc)
-    close(1)
+    close(60)
+    close(50)
+    close(40)
     close(30)
     close(20)
+    close(1)
 
 end program prodrv
                          
