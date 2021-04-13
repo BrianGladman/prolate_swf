@@ -1434,7 +1434,7 @@ if (output) then
               if(nacce == 1) chr = 'e'
               if(ioprad == 2) write(20, 690)l, r1c, ir1e, r1dc, ir1de, r2c, ir2e, r2dc, ir2de, naccr, chr
               if(ioprad == 1) write(20, 710) l, r1c, ir1e, r1dc, ir1de
-690           format(1x, i6, 2x, 4(f17.14, 1x, i6, 2x), i2, a) 
+690           format(1x, i6, 2x, 4(f17.14, 1x, i6, 2x), i2, a)
 710           format(1x, i6, 2x, 2(f17.14, 1x, i6, 2x))
 end if
               qr1(li) = r1c
