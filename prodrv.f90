@@ -8,6 +8,7 @@ program prodrv
     integer   i, im, j, mmin, minc, mnum, m, l, lnum, ioprad, iopang, &
               iopnorm, ioparg, narg, kind, kindd, kindq
     real(knd) c, x1, arg1, darg, api
+    character chr
 
 
     real(knd), dimension(:), allocatable ::    arg, r1c, r1dc, r2c, r2dc
@@ -63,9 +64,11 @@ program prodrv
 
             do i = 1, lnum
                 l = m + i - 1
-                if(ioprad == 2) write(20,690) l, r1c(i), ir1e(i), r1dc(i), ir1de(i), r2c(i), ir2e(i), r2dc(i), ir2de(i), naccr(i)
+                chr = 'w'
+                if (naccr(i) < 0) chr = 'e'
+                if(ioprad == 2) write(20,690) l, r1c(i), ir1e(i), r1dc(i), ir1de(i), r2c(i), ir2e(i), r2dc(i), ir2de(i), abs(naccr(i)), chr
                 if(ioprad == 1) write(20,710) l, r1c(i), ir1e(i), r1dc(i), ir1de(i)
-690             format(1x,i6,2x,4(f17.14,1x,i6,2x),i2, ' ')
+690             format(1x,i6,2x,4(f17.14,1x,i6,2x),i2,a)
 710             format(1x,i6,2x,2(f17.14,1x,i6,2x))
             end do
 
@@ -94,8 +97,8 @@ program prodrv
                         if(iopang == 1) write(30, 60) arg(j), s1c(i, j), is1e(i, j), naccs(i, j)
                         if(iopang == 2) write(30, 70) arg(j), s1c(i, j), is1e(i, j), s1dc(i, j), is1de(i, j), naccs(i, j)
                     end if
-60                  format(1x,f17.14,2x,f17.14,2x,i5,2x,', ',i2)
-70                  format(1x,f17.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
+60                  format(1x,f19.14,2x,f17.14,2x,i5,2x,', ',i2)
+70                  format(1x,f19.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
                 end do
             end do
         end if

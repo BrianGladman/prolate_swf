@@ -1447,6 +1447,7 @@ end if
                 qr2d(li) = r2dc
                 ir2d(li) = ir2de
                 nar(li) = naccr
+                if(nacce.eq.1) nar(li) = -naccr                
                 end if
               if(ioprad /= 2) go to 720
               if(lowacc > naccr) lowacc = naccr
@@ -1497,8 +1498,8 @@ end if
 if (output) then
                 if(iopang == 1) write(30, 750) barg(jarg), s1c(jarg), is1e(jarg), naccs(jarg)
                 if(iopang == 2) write(30, 760) barg(jarg), s1c(jarg), is1e(jarg), s1dc(jarg), is1de(jarg), naccs(jarg)
-750             format(1x, f19.14, 2x, f17.14, 2x, i5, 2x,', ',i2)
-760             format(1x, f19.14, 2x, f17.14, 2x, i5, 2x, f17.14, 2x, i5, 2x, i2)
+750             format(1x, f19.14, 2x, f19.14, 2x, i5, 2x,', ',i2)
+760             format(1x, f19.14, 2x, f19.14, 2x, i5, 2x, f19.14, 2x, i5, 2x, i2)
 end if
 if (debug) then
                 if(knd == kindd .and. iopang == 1) write(50, 770) s1c(jarg), is1e(jarg)

@@ -5,7 +5,6 @@ module param
     logical, parameter :: debug = .true.
     logical, parameter :: warn = .true.
     logical, parameter :: output = .true.
-    logical, parameter :: suffix = .false.
 end module param
 
 program profcn
@@ -1365,12 +1364,8 @@ end if
               ir2de=0
 680           continue
 if (output) then
-              if (.not. suffix) then
-                  chr = ' '
-              else
-                  if(nacce.ne.1) chr = 'w'
-                  if(nacce.eq.1) chr = 'e'
-              end if
+              if(nacce.ne.1) chr = 'w'
+              if(nacce.eq.1) chr = 'e'
               if(ioprad.eq.2) write(20,690)l,r1c,ir1e,r1dc,ir1de,r2c,ir2e,r2dc,ir2de,naccr,chr
               if(ioprad.eq.1) write(20,710) l,r1c,ir1e,r1dc,ir1de
 690           format(1x,i6,2x,4(f17.14,1x,i6,2x),i2,a)
@@ -1414,8 +1409,8 @@ end if
 if (debug) then
                 if(knd.eq.kindd.and.ioparg.eq.0) write(50,730) arg(jarg),naccs(jarg)
                 if(knd.eq.kindq.and.ioparg.eq.0) write(50,735) arg(jarg),naccs(jarg)
-730             format(1x,'theta = ',f17.14,'  accuracy = ',i5,' digits.')
-735             format(1x,'theta = ',f33.30,'  accuracy = ',i5,' digits.')
+730             format(1x,'theta = ',f19.14,'  accuracy = ',i5,' digits.')
+735             format(1x,'theta = ',f35.30,'  accuracy = ',i5,' digits.')
                 if(knd.eq.kindd.and.ioparg.eq.1) write(50,740) barg(jarg),naccs(jarg)
                 if(knd.eq.kindq.and.ioparg.eq.1) write(50,745) barg(jarg),naccs(jarg)
 740             format(1x,'eta = ',f17.14,'  accuracy = ',i5, ' digits.')
@@ -1426,8 +1421,8 @@ if (output) then
                 if(ioparg.eq.0.and.iopang.eq.2) write(30,760) arg(jarg),s1c(jarg),is1e(jarg),s1dc(jarg),is1de(jarg),naccs(jarg)
                 if(ioparg.eq.1.and.iopang.eq.1) write(30,750) barg(jarg),s1c(jarg),is1e(jarg),naccs(jarg)
                 if(ioparg.eq.1.and.iopang.eq.2) write(30,760) barg(jarg),s1c(jarg),is1e(jarg),s1dc(jarg),is1de(jarg),naccs(jarg)
-750             format(1x,f17.14,2x,f17.14,2x,i5,2x,', ',i2)
-760             format(1x,f17.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
+750             format(1x,f19.14,2x,f17.14,2x,i5,2x,', ',i2)
+760             format(1x,f19.14,2x,f17.14,2x,i5,2x,f17.14,2x,i5,2x,i2)
 end if
 if (debug) then
                 if(knd.eq.kindd.and.iopang.eq.1) write(50,770) s1c(jarg),is1e(jarg)
