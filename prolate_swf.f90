@@ -840,6 +840,7 @@ end if
               nsubw = -int(log10(abs(wronc / wronca) + dec))
               if(nsubw < 0) nsubw = 0
               if(naccint > 1) naccint = naccint + nsubw
+              if(naccint > ndec - 1) naccint = ndec - 1
 if (debug) then
                 if(nsubw > 0) then
                 write(40, 200) nsubw
@@ -1052,6 +1053,7 @@ end if
               nsubw = -int(log10(abs(wronc / wronca) + dec))
               if(nsubw < 0) nsubw = 0
               if(naccneu > 1) naccneu = naccneu + nsubw
+              if(naccneu > ndec - 1) naccneu = ndec - 1
 if (debug) then
                 if(nsubw > 0) then
                 write(40, 200) nsubw
@@ -3566,6 +3568,7 @@ end if
         nsubw =-int(log10(abs(wronc / wroncm) + dec))
         nacceta = -int(log10(abs((wronc - wront) / wront) + dec))
         if(nacceta < 0) nacceta = 0
+        if(nacceta > ndec - 1) nacceta = ndec - 1
         nacciop = 0
         if(nacceta < minacc .and. naccn - nsubw > naccd .and. naccn >  &
             nacceta .and. (naccn >= min(naccr, 4) .or. (jtestm >= ndec - 1 .and.  &
