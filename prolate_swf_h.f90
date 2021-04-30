@@ -4,8 +4,7 @@ module prolate_swf
  contains
 
   subroutine profcn(c, m, lnum, ioprad, x1, iopang, iopnorm, narg, arg, &
-           r1c, ir1e, r1dc, ir1de, r2c, &
-           ir2e, r2dc, ir2de, naccr, &
+           r1c, ir1e, r1dc, ir1de, r2c, ir2e, r2dc, ir2de, naccr, &
            s1c, is1e, s1dc, is1de, naccs)
 
 !      version 1.11 April 2021
@@ -135,13 +134,42 @@ module prolate_swf
 !  as a discussion about accuracy, expansion d coefficients and eigenvalues
 !  is given in the readme file.
 
-    real(knd), intent (in) :: c, x1, arg(narg)
-    integer, intent (in)  :: m, lnum, ioprad, iopang, iopnorm, narg
+    real(knd), intent (in)  :: c, x1, arg(narg)
+    integer, intent (in)    :: m, lnum, ioprad, iopang, iopnorm, narg
     real(knd), intent (out) :: r1c(lnum), r1dc(lnum), r2c(lnum), r2dc(lnum), &
-                  s1c(lnum, narg), s1dc(lnum, narg)
-    integer, intent (out)  :: ir1e(lnum), ir1de(lnum), ir2e(lnum), ir2de(lnum), &
-                  is1e(lnum, narg), is1de(lnum, narg), naccr(lnum), &
-                  naccs(lnum, narg)
+                               s1c(lnum, narg), s1dc(lnum, narg)
+    integer, intent (out)   :: ir1e(lnum), ir1de(lnum), ir2e(lnum), ir2de(lnum), &
+                               is1e(lnum, narg), is1de(lnum, narg), naccr(lnum), &
+                               naccs(lnum, narg)
+
+!  real(knd) scalars
+    real(knd) aj1, aj2, ang, apcoef, apcoefn, api, c2, c4, coefn, &
+         coefme, coefmo, dec, dfnorm, dmfnorm, dmsnorm, dmlf, &
+         dmlmf, dmlms, dmlms1, dneg, d01, eigval, eigvalp, eig1, &
+         eig2, eig3, eig4, eig5, etaval, factor, pcoefe, pcoefet, &
+         pcoefn, pcoefo, pdcoefe, pdcoefet, pdcoefo, pi, qdml, qml, &
+         rm, rm2, r1c_, r1dc_, r2c_, r2dc_, r2ec, r2dec, r2ic, r2dic, r2lc, &
+         r2dlc, r2nc, r2dnc, sgn, termpq, x, xb, xbninp, wm, wronc, &
+         wront, wronca, wroncb
+    character chr
+
+    integer, dimension(:), allocatable :: iqdl, iql, ifajo, ibese, ineue, ineuee, &
+        ipnormint, norme, ipdnorm, ipdnorma, ipnorm, ipnorma, ipdtempe, ipdtempo, &
+        iptempe, iptempo, is1e_, is1de_, naccs_, nees, naccsav, neeb, limpsv, &
+        limnsv, jelimsv
+    
+    integer, dimension(:,:), allocatable ::  ineuesv
+
+    real(knd), dimension(:), allocatable :: qdl, ql, fajo, eig, enr, bliste, gliste, &
+        blisto, glisto, drhor, pint1, pint2, pint3, pint4, rpint1, rpint2, sbesf, &
+        sbesdf, pnormint, sbesdr, sbesn, sneun, sneune, sneudr, sneudre, enrneg, &
+        sneuf, sneudf, sneufe, sneudfe, alpha, beta, coefa, coefb, coefc, coefd, &
+        coefe, gamma, pdratt, prat1, prx, pdrx, qr, qdr, etainp, pdnorm, pdnorma, &
+        pnorm, pnorma, pdtempe, pdtempo, ptempe, ptempo, s1c_, s1dc_, xin, xlninp, &
+        eta, wmeta2, xbn, xln, wr, xr,  pratb, pratt
+
+    real(knd), dimension(:,:), allocatable :: sneunsv, sneudrsv, sneufsv, sneudfsv, &
+        pdr, pdrat, pr, prat, pratbsv, prattsv, pdratsv
 
 !       Here is where the user sets kindd, the value for kind that
 !       corresponds to double precision data on the users computer.
@@ -216,253 +244,33 @@ module prolate_swf
     maxp = max(maxp, maxpdr)
     maxd = maxp / 2 + 1
     maxlp = lnum + maxm + 5
-    maxmp = maxm +5
+    maxmp = maxm + 5
     maxt = 1
     jnenmax = 10
     if(iopang /= 0) maxt = narg
 
-     call main (mmin, minc, mnum, lnum, c, ioprad, iopang, iopnorm, minacc, &
-          x1, ngau, arg, narg, neta, maxd, maxdr, maxint, maxj, maxlp, maxm, &
-          maxmp, maxn, maxp, maxpdr, maxq, maxt, jnenmax, kindd, kindq, ndec, nex, &
-          r1c, ir1e, r1dc, ir1de, r2c, ir2e, r2dc, ir2de, naccr, s1c, is1e, s1dc, is1de, naccs)
+    allocate (iqdl(lnum), iql(lnum), ifajo(lnum), ibese(maxlp), ineue(maxlp), &
+        ineuee(maxlp),  ipnormint(maxlp), norme(maxmp), ipdnorm(maxt), ipdnorma(maxt), &
+        ipnorm(maxt), ipnorma(maxt), ipdtempe(maxt), ipdtempo(maxt), iptempe(maxt), & 
+        iptempo(maxt), is1e_(maxt), is1de_(maxt), naccs_(maxt), nees(100), naccsav(100), &
+        neeb(jnenmax), limpsv(jnenmax), limnsv(jnenmax), jelimsv(jnenmax))
 
-    end subroutine
+    allocate (ineuesv(jnenmax, maxlp))
 
-    subroutine main (mmin, minc, mnum, lnum, c, ioprad, iopang, iopnorm, minacc, &
-          x1, ngau, arg, narg, neta, maxd, maxdr, maxint, maxj, maxlp, maxm, &
-          maxmp, maxn, maxp, maxpdr, maxq, maxt, jnenmax, kindd, kindq, ndec, nex, &
-          r1c, ir1e, r1dc, ir1de, r2c, ir2e, r2dc, ir2de, naccr, s1c, is1e, s1dc, is1de, naccs)
+    allocate (qdl(lnum), ql(lnum), fajo(lnum), eig(lnum), enr(maxd), bliste(maxd), &
+        gliste(maxd), blisto(maxd), glisto(maxd), drhor(maxdr), pint1(maxint), pint2(maxint), &
+        pint3(maxint), pint4(maxint), rpint1(maxint), rpint2(maxint), sbesf(maxj), sbesdf(maxj), &
+        pnormint(maxlp), sbesdr(maxlp), sbesn(maxlp), sneun(maxlp), sneune(maxlp), sneudr(maxlp), &
+        sneudre(maxlp), enrneg(maxmp), sneuf(maxn), sneudf(maxn), sneufe(maxn), sneudfe(maxn), &
+        alpha(maxp), beta(maxp), coefa(maxp), coefb(maxp), coefc(maxp), coefd(maxp), coefe(maxp), &
+        gamma(maxp), pdratt(maxp), prat1(maxp), prx(maxpdr), pdrx(maxpdr), qr(maxq), qdr(maxq), &
+        etainp(maxt), pdnorm(maxt), pdnorma(maxt), pnorm(maxt), pnorma(maxt), pdtempe(maxt), &
+        pdtempo(maxt), ptempe(maxt), ptempo(maxt), s1c_(maxt), s1dc_(maxt), xin(maxt), xlninp(maxt), &
+        eta(neta), wmeta2(neta), xbn(neta), xln(neta), wr(ngau), xr(ngau), pratb(maxp), pratt(maxp))
 
-!  purpose:     To coordinate the calculation of both the prolate
-!               spheroidal radial and angular functions and their
-!               first derivatives using various algorithms.
-!
-!  parameters:
-!
-!     input:    mmin   : minimum desired value of m
-!               minc   : increment in m used to compute other values
-!               mnum   : number of values of m that are desired
-!               lnum   : desired number of values of l = m, m + 1, ...,
-!                        m + lnum - 1
-!               c      : size parameter
-!               ioprad : equal to 0 if no radial functions are desired;
-!                        equal to 1 if only radial functions of the
-!                          first kind and their first derivatives are
-!                          desired;
-!                        equal to 2 if radial functions of both kinds
-!                          and their first derivatives are desired
-!               iopang : equal to 0 if no angular functions are desired;
-!                        equal to 1 if only angular functions of the
-!                          first kind are desired;
-!                        equal to 2 if angular functions of the first
-!                          kind and their first derivatives are desired
-!               iopnorm: equal to 0 when the angular functions have
-!                        the same norm as the corresponding associated
-!                        Legendre functions;
-!                        equal to 1 when the angular functions are
-!                        scaled by the square root of the normalization
-!                        of the corresponding Legendre function, giving
-!                        them unity norm
-!               minacc : desired minimum accuracy for the radial
-!                        functions
-!               x1     : radial coordinate x minus 1
-!               ngau   : order of the Gaussian quadrature to be used in
-!                        computing integrals in subroutine pint for use
-!                        in subroutine r2int where the integal method
-!                        is used to calculate r2 and r2d
-!               arg   : array containing the values of eta for which
-!                        angular functions are to be computed (named
-!                        arg in subroutine calling statement)
-!               narg   : number of desired eta values; dimension of
-!                        arg.
-!               neta   : number of values available for eta in the
-!                        variable eta method for calculating r2 and r2d
-!                        (subroutine r2eta); set equal to 993 above
-!               maxd   : dimension of enr array containing ratios of
-!                        the expansion d coefficients
-!               maxdr  : dimension of drhor array containing special d
-!                        coefficient ratios used in subroutine r2leg
-!                        when computing the sum of Legendre functions of
-!                        the first kind that appear in the Legendre
-!                        function expansion for r2 and r2d
-!               maxint : maximum number of terms available for computing
-!                        r2 and r2d in the subroutine r2int; dimension
-!                        of the arrays of integrals computed in
-!                        subroutine pint
-!               maxj   : equal to the dimension of the array of ratios
-!                        of spherical Bessel functions of the first kind
-!                        and the array of ratios of the first derivative
-!                        of this Bessel function to the corresponding
-!                        Bessel function
-!               maxlp  : maximum value desired for l
-!               maxm   : maximum value desired for m
-!               maxmp  : maxm + 5; dimension of the integer array norme
-!                        used in scaling of the Neumann functions in
-!                        the integrands in subroutine pint
-!               maxn   : dimension of the arrays of Neumann function
-!                        ratios used in computing r2 and r2d
-!               maxp   : dimension of arrays of Legendre functions of
-!                        the first kind used in computing angular
-!                        functions, in computing integrands in
-!                        subroutine pint and in computing r2 and r2d in
-!                        subroutine r2eta
-!               maxpdr : dimension of the arrays of ratios of both
-!                        Legendre functions of the first kind and their
-!                        first derivatives used in the sum of these
-!                        functions that contribute to r2 and r2d in
-!                        subroutine r2leg
-!               maxq   : dimension of arrays of ratios of Legendre
-!                        functions of the second kind and ratios of
-!                        their first derivatives used in their sum in
-!                        subroutine r2leg
-!               maxt   : equal to narg if angular functions are
-!                        computed where it is the maximum value of the
-!                        first index in the arrays of Legendre functions
-!                        used in subroutine s1leg;
-!                        otherwise equal to 1 to specify the
-!                        first index for the Legendre functions used
-!                        in the variable eta method for computing r2
-!                        and r2d in subroutine r2eta
-!               jneumax: number of arrays of ratios of Legendre and
-!                        Neumann functions stored as eta is varied in
-!                        subroutine r2eta; set equal to 10 so that the
-!                        previous 10 sets of ratios are available
-!                        to use without recalculating them when one of
-!                        thes previous values for eta is used again for
-!                        a later value of l
-!               kindd  : kind value for double precision real data
-!               kindq  : kind value for quadruple precision real data
-!               ndec   : number of decimal digits for real(knd)
-!               nex    : maximum exponent for real(knd)
-!
-!     output:   r1c    : array of lnum values for the characteristic
-!                        of the radial function of the first kind
-!                        (r1c in call to subroutine profcn)
-!               ir1e    : array of exponents corresponding to r1c
-!                        (ir1e in call to subroutine profcn)
-!               r1dc   : array of lnum values for the characteristic
-!                        of the derivative of the radial function of
-!                        the first kind (r1dc in call to subroutine
-!                        profcn)
-!               ir1de   : array of exponents corresponding to r1dc
-!                        (ir1de in call to subroutine profcn)
-!               r2c    : array of lnum values for the characteristic
-!                        of the radial function of the second kind
-!                        (r2c in call to subroutine profcn)
-!               ir2e    : array of exponents corresponding to r2c
-!                        (ir2e in call to subroutine profcn)
-!               r2dc   : array of lnum values for the characteristic
-!                        of the derivative of the radial function of
-!                        the second kind (r2dc in call to subroutine
-!                        profcn)
-!               ir2de   : array of exponents corresponding to r1dc
-!                        (ir2de in call to subroutine profcn)
-!               naccr    : vector of lnum values for the estimated radial
-!                        function accuracy
-!               s1c     : two dimensional array of the characteristics
-!                        of the angular functions of the first kind
-!                        s1c(i,j) is the characteristic for the jth
-!                        value of eta and the degree = m + i -1
-!                        (s1c in call to subroutine profcn)
-!               is1e    : array of exponents corresponding to s1c (is1e)
-!               s1dc    : two dimensional array of the characteristics
-!                        of the first derivatives of the angular
-!                        functions of the first kind; s1dc(i,j) is the
-!                        characteristic for the jth value of eta and
-!                        the degree = m + i -1 (s1dc in call to
-!                        subroutine profcn)
-!               is1de   : array of exponents corresponding to s1dc
-!                       (is1de in call to subroutine profcn)
-!               naccs    : two dimensional array naccs(lnum,narg) of the
-!                        estimated accuracy values for the narg angular
-!                        function values for each of the lnum values of l
-!
-    use param
-!
-!  real(knd) scalars
-    real(knd) aj1, aj2, ang, apcoef, apcoefn, api, c, c2, c4, coefn, &
-         coefme, coefmo, dec, dfnorm, dmfnorm, dmsnorm, dmlf, &
-         dmlmf, dmlms, dmlms1, dneg, d01, eigval, eigvalp, eig1, &
-         eig2, eig3, eig4, eig5, etaval, factor, pcoefe, pcoefet, &
-         pcoefn, pcoefo, pdcoefe, pdcoefet, pdcoefo, pi, qdml, qml, &
-         rm, rm2, r1c_, r1dc_, r2c_, r2dc_, r2ec, r2dec, r2ic, r2dic, r2lc, &
-         r2dlc, r2nc, r2dnc, sgn, termpq, x, xb, xbninp, x1, wm, wronc, &
-         wront, wronca, wroncb
-    character chr
-!
-!  integer and real(knd) arrays with dimension lnum
-    dimension iqdl(lnum), iql(lnum), ifajo(lnum), naccr(lnum)
-    real(knd) qdl(lnum), ql(lnum), fajo(lnum), eig(lnum)
-    dimension ir1e(lnum), ir1de(lnum), ir2e(lnum), ir2de(lnum)
-    real(knd) r1c(lnum), r1dc(lnum), r2c(lnum), r2dc(lnum)
-!
-!  real(knd) and integer arrays with dimensions lnum and narg
-    real(knd) s1c(lnum, narg), s1dc(lnum, narg)
-    dimension is1e(lnum, narg), is1de(lnum, narg), naccs(lnum, narg)
-!
-!  real(knd) arrays with dimension maxd
-    real(knd) enr(maxd), bliste(maxd), gliste(maxd), &
-         blisto(maxd), glisto(maxd)
-!
-!  real(knd) arrays with dimension maxdr
-    real(knd) drhor(maxdr)
-!
-!  real(knd) arrays with dimension maxint
-    real(knd) pint1(maxint), pint2(maxint), pint3(maxint), &
-         pint4(maxint), rpint1(maxint), rpint2(maxint)
-!
-!  real(knd) array with dimension maxj
-    real(knd) sbesf(maxj), sbesdf(maxj)
-!
-!  integer and real(knd) arrays with dimension maxlp
-    dimension ibese(maxlp), ineue(maxlp), ineuee(maxlp), &
-         ipnormint(maxlp), ineuesv(jnenmax, maxlp)
-    real(knd) pnormint(maxlp), sbesdr(maxlp), sbesn(maxlp), &
-         sneun(maxlp), sneune(maxlp), sneudr(maxlp), &
-         sneudre(maxlp), sneunsv(jnenmax, maxlp), &
-         sneudrsv(jnenmax, maxlp)
-!
-!  integers and real(knd) arrays with dimension maxmp
-    real(knd) enrneg(maxmp)
-    dimension norme(maxmp)
-!
-!  real(knd) arrays with dimension maxn
-    real(knd) sneuf(maxn), sneudf(maxn), sneufe(maxn), sneudfe(maxn), &
-         sneufsv(jnenmax, maxn), sneudfsv(jnenmax, maxn)
-!
-!  real(knd) arrays with dimension given by maxp
-    real(knd) alpha(maxp), beta(maxp), coefa(maxp), coefb(maxp), &
-         coefc(maxp), coefd(maxp), coefe(maxp), gamma(maxp), &
-         pdr(maxt, maxp), pdrat(maxt, maxp), pdratt(maxp), &
-         pr(maxt, maxp), prat(maxt, maxp), pratb(maxp), pratt(maxp), &
-         prat1(maxp), pratbsv(jnenmax, maxp), &
-         prattsv(jnenmax, maxp), pdratsv(jnenmax, maxp)
-!
-!  real(knd) arrays with dimension maxpdr
-    real(knd) prx(maxpdr), pdrx(maxpdr)
-!
-!  real(knd) arrays with dimension maxq
-    real(knd) qr(maxq), qdr(maxq)
-!
-!  real(knd) and integer arrays with dimension maxt
-    real(knd) arg(maxt), etainp(maxt), pdnorm(maxt), pdnorma(maxt), &
-         pnorm(maxt), pnorma(maxt), pdtempe(maxt), pdtempo(maxt), &
-         ptempe(maxt), ptempo(maxt), s1c_(maxt), s1dc_(maxt), &
-         xin(maxt), xlninp(maxt)
-    dimension ipdnorm(maxt), ipdnorma(maxt), ipnorm(maxt), &
-         ipnorma(maxt), ipdtempe(maxt), ipdtempo(maxt), &
-         iptempe(maxt), iptempo(maxt), is1e_(maxt), is1de_(maxt), &
-         naccs_(maxt)
-!
-!  real(knd) arrays with dimension neta
-    real(knd) eta(neta), wmeta2(neta), xbn(neta), xln(neta)
-!
-!  real(knd) arrays with dimension ngau
-    real(knd) wr(ngau), xr(ngau)
-!
-!  miscellaneous integer arrays
-    dimension nees(100), naccsav(100), neeb(jnenmax), limpsv(jnenmax), &
-         limnsv(jnenmax), jelimsv(jnenmax)
+    allocate (sneunsv(jnenmax, maxlp), sneudrsv(jnenmax, maxlp), sneufsv(jnenmax, maxn), &
+        sneudfsv(jnenmax, maxn), pdr(maxt, maxp), pdrat(maxt, maxp), pr(maxt, maxp), prat(maxt, maxp), &
+        pratbsv(jnenmax, maxp), prattsv(jnenmax, maxp), pdratsv(jnenmax, maxp))
 !
     dec = 10.0e0_knd ** (-ndec - 1)
     if(ioprad /= 0) x = x1 + 1.0e0_knd
@@ -488,7 +296,7 @@ end if
      if(ioprad == 2) wront = 1.0e0_knd / (c * x1 * (x1 + 2.0e0_knd))
      ibflag1 = 0
       do 900 mi = 1, mnum
-      m = mmin + minc * (mi - 1)
+!     m = mmin + minc * (mi - 1)
       m2 = m + m
 if (debug) then
        if(knd == kindd .and. iopang /= 0) write(50, 35) c, m
@@ -1512,7 +1320,23 @@ if (debug) then
 end if
 810       continue
 850      continue
-900     continue
+900   continue
+    deallocate (sneunsv, sneudrsv, sneufsv, sneudfsv, pdr, pdrat, pr, prat, pratb, pratt, &
+                pratbsv, prattsv, pdratsv)
+    deallocate ( &
+    qdl, ql, fajo, eig, enr, bliste, gliste, blisto, glisto, drhor, &
+    pint1, pint2, pint3, pint4, rpint1, rpint2, sbesf, sbesdf, pnormint, &
+    sbesdr, sbesn, sneun, sneune, sneudr, sneudre, enrneg, sneuf, sneudf, &
+    sneufe, sneudfe, alpha, beta, coefa, coefb, coefc, coefd, coefe, gamma, &
+    pdratt, prat1, prx, pdrx, qr, qdr, etainp, pdnorm, pdnorma, pnorm, &
+    pnorma, pdtempe, pdtempo, ptempe, ptempo, s1c_, s1dc_, xin, xlninp, &
+    eta, wmeta2, xbn, xln, wr, xr)
+    deallocate (ineuesv)
+    deallocate (iqdl, iql, ifajo, ibese, ineue, ineuee, &
+    ipnormint, norme, ipdnorm, ipdnorma, ipnorm, ipnorma, ipdtempe, ipdtempo, &
+    iptempe, iptempo, is1e_, is1de_, naccs_, nees, naccsav, neeb, limpsv, &
+    limnsv, jelimsv)
+
      return
      end subroutine
 !
