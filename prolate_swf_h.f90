@@ -157,7 +157,7 @@ module prolate_swf
         ipnormint, norme, ipdnorm, ipdnorma, ipnorm, ipnorma, ipdtempe, ipdtempo, &
         iptempe, iptempo, is1e_, is1de_, naccs_, nees, naccsav, neeb, limpsv, &
         limnsv, jelimsv
-    
+
     integer, dimension(:,:), allocatable ::  ineuesv
 
     real(knd), dimension(:), allocatable :: qdl, ql, fajo, eig, enr, bliste, gliste, &
@@ -251,7 +251,7 @@ module prolate_swf
 
     allocate (iqdl(lnum), iql(lnum), ifajo(lnum), ibese(maxlp), ineue(maxlp), &
         ineuee(maxlp),  ipnormint(maxlp), norme(maxmp), ipdnorm(maxt), ipdnorma(maxt), &
-        ipnorm(maxt), ipnorma(maxt), ipdtempe(maxt), ipdtempo(maxt), iptempe(maxt), & 
+        ipnorm(maxt), ipnorma(maxt), ipdtempe(maxt), ipdtempo(maxt), iptempe(maxt), &
         iptempo(maxt), is1e_(maxt), is1de_(maxt), naccs_(maxt), nees(100), naccsav(100), &
         neeb(jnenmax), limpsv(jnenmax), limnsv(jnenmax), jelimsv(jnenmax))
 
