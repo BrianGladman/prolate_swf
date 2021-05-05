@@ -213,8 +213,7 @@ end if
     subroutine main (mmin, minc, mnum, lnum, c, ioprad, iopang, iopnorm, &
              minacc, x1, ngau, ioparg, arg1, darg, narg, neta, maxd, &
              maxdr, maxint, maxj, maxlp, maxm, maxmp, maxn, maxp, &
-             maxpdr, maxq, maxt, jnenmax, kindd, kindq, ndec, &
-             nex)
+             maxpdr, maxq, maxt, jnenmax, kindd, kindq, ndec, nex)
 !
 !  purpose:     To coordinate the calculation of both the prolate
 !               spheroidal radial and angular functions and their
