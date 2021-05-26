@@ -1,4 +1,4 @@
-! version 1.10 March 2021
+! version 1.12 May 2021
 
 module param
     integer, parameter :: knd = selected_real_kind(16)
@@ -4421,7 +4421,7 @@ end if
 !  the three term recursion relating the Legendre function ratios
 !
 !              m                m
-!   pr(k,j) = p    (barg(k)) / p  (barg(k))
+!   pr(k,j) = P    (barg(k)) / P  (barg(k))
 !              m+j-1            m+j-3
 !
 !  and calculate the coefficients coefa(j), coefb(j), coefc(j),
@@ -4429,8 +4429,13 @@ end if
 !  ratios of Legendre function derivatives
 !
 !               m                 m
-!   pdr(k,j) = p'    (barg(k)) / p'  (barg(k))
+!   pdr(k,j) = P'    (barg(k)) / P'  (barg(k))
 !               m+j-1             m+j-3
+!
+!  Note that pr(k,1) and pr(k,2) are not ratios but actually equal to
+!   m      m                                              m       m
+!  P  and P   . Also, pdr(k,1) and pdr(k,2) are equal to P'  and P' .
+!   m      m+1                                            m       m+1
 !
      if(limcsav >= lim) go to 30
      do 10 j = limcsav + 3, lim + 2
@@ -4498,11 +4503,11 @@ end if
 !
 !   calculate the corresponding ratios of first derviatives of
 !   successive Legendre functions of the same parity using the
-!   following relationship (except for eta equal to zero or unity,
-!   where special expressions are used, and except for when the
-!   magnitude of the argument barg is less than or equal to 0.1,
-!   where recursion on the ratios of successive first derivatives
-!   of the same parity is used instead)
+!   following relationship (except for (1) eta equal to zero or unity,
+!   where special expressions are used and (2) when the magnitude of the
+!   argument barg is <= 0.1 or abs((m+1)*barg*barg - 1) < 0.01, where
+!   recursion on the ratios of successive first derivatives of the same
+!   parity is used instead)
 !
 !              (coefa(j)+coefb(j)*barg(k)*barg(k))*pr(k,j)+coefc(j)
 !   pdr(k,j) = ----------------------------------------------------
@@ -4540,12 +4545,14 @@ end if
      jlow = 4
      go to 90
 80    pdr(k, 2) = am2p1 * ((rm + 1.0e0_knd) * bargs - 1.0e0_knd) / (rm * barg(k))
+     if(pdr(k, 2) == 0.0e0_knd) pdr(k, 2) = ten ** (-ndec)
      jlow = 3
+     if(abs((rm + 1.0e0_knd) * bargs - 1.0e0_knd) < 0.01e0_knd) go to 110
 90    continue
      if(abs(barg(k)) <= 0.1e0_knd) go to 110
       do 100 j = jlow, lim + 2
       den = (pr(k, j) + coefd(j) + coefe(j) * bargs)
-      if(den == 0.0e0_knd) den = 1.0e-50_knd
+      if(den == 0.0e0_knd) den = ten ** (-ndec)
       pdr(k, j) = ((coefa(j) + coefb(j) * bargs) * pr(k, j) + coefc(j)) / den
 100     continue
      go to 120
