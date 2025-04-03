@@ -16,7 +16,7 @@
 			<Tool Name="VFPostBuildEventTool"/>
 			<Tool Name="VFManifestTool" SuppressStartupBanner="true"/>
 		</Configuration>
-		<Configuration Name="Debug|x64" UseCompiler="ifortCompiler">
+		<Configuration Name="Debug|x64" UseCompiler="ifxCompiler">
 			<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
 			<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole" StackReserveSize="50000000"/>
 			<Tool Name="VFResourceCompilerTool"/>
@@ -52,9 +52,10 @@
 	</Configurations>
 	<Files>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath="..\param.f90"/>
-		<File RelativePath="..\prodrv.f90"/>
-		<File RelativePath="..\prolate_swf.f90"/></Filter>
+			<File RelativePath="..\param.f90"/>
+			<File RelativePath="..\prodrv.f90"/>
+			<File RelativePath="..\prolate_swf.f90"/>
+		</Filter>
 	</Files>
 	<Globals/>
 </VisualStudioProject>
